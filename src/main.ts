@@ -145,22 +145,22 @@ function describe12EdoInterval(semitones: number): string {
 function describeSoundingInterval(cents: number, edo: number, steps: number): string {
   const absSteps = Math.abs(steps);
   const c = Math.abs(cents);
-  if (absSteps === 0) return lang === 'es' ? 'Unísono (0¢)' : 'Unison (0¢)';
-  if (absSteps === edo) return lang === 'es' ? `Octava real 2:1 (${c.toFixed(0)}¢)` : `True 2:1 Octave (${c.toFixed(0)}¢)`;
-  if (absSteps === edo * 2) return lang === 'es' ? `Doble octava 4:1 (${c.toFixed(0)}¢)` : `Double Octave 4:1 (${c.toFixed(0)}¢)`;
+  if (absSteps === 0) return lang === 'es' ? 'Misma nota' : 'Same note';
+  if (absSteps === edo) return lang === 'es' ? '¡Octava completa! (doble aguda)' : 'Full octave! (twice as high)';
+  if (absSteps === edo * 2) return lang === 'es' ? 'Dos octavas completas' : 'Two full octaves';
   if (edo === 18) {
-    if (absSteps === 1) return lang === 'es' ? 'Tercio de tono (66.7¢)' : 'Third-tone (66.7¢)';
-    if (absSteps === 2) return lang === 'es' ? 'Dos tercios (133.3¢)' : 'Two third-tones (133.3¢)';
-    if (absSteps === 3) return lang === 'es' ? 'Tono entero exacto (200¢)' : 'Exact whole tone (200¢)';
-    if (absSteps === 5) return lang === 'es' ? '3ª neutra ≈ 11:9 (333.3¢)' : 'Neutral 3rd ≈ 11:9 (333.3¢)';
-    if (absSteps === 6) return lang === 'es' ? '3ª mayor exacta (400¢)' : 'Exact major 3rd (400¢)';
-    if (absSteps === 7) return lang === 'es' ? 'Cuasi-4ª (466.7¢, −33¢)' : 'Quasi-4th (466.7¢, −33¢)';
-    if (absSteps === 8) return lang === 'es' ? '11ª armónica ≈ 11:8 (533.3¢)' : 'Harmonic 11th ≈ 11:8 (533.3¢)';
-    if (absSteps === 9) return lang === 'es' ? 'Tritono exacto (600¢)' : 'Exact tritone (600¢)';
-    if (absSteps === 11) return lang === 'es' ? 'Cuasi-5ª (733.3¢, +31¢)' : 'Quasi-5th (733.3¢, +31¢)';
-    if (absSteps === 12) return lang === 'es' ? '2/3 octava / 6ª m (800¢)' : '2/3 Octave / m6 (800¢)';
+    if (absSteps === 1) return lang === 'es' ? '1 tercio de tono (pasito corto)' : '1 third-tone (tiny step)';
+    if (absSteps === 2) return lang === 'es' ? '2 tercios de tono' : '2 third-tones';
+    if (absSteps === 3) return lang === 'es' ? '1 tono entero exacto' : '1 exact whole step';
+    if (absSteps === 5) return lang === 'es' ? 'Tercera neutra (ni alegre ni triste)' : 'Neutral 3rd (neither happy/sad)';
+    if (absSteps === 6) return lang === 'es' ? 'Tercera mayor (brillante)' : 'Major 3rd (bright)';
+    if (absSteps === 7) return lang === 'es' ? 'Cuarta suave (un pelito baja)' : 'Soft fourth (slightly low)';
+    if (absSteps === 8) return lang === 'es' ? 'Nota armónica especial (11:8)' : 'Special harmonic note (11:8)';
+    if (absSteps === 9) return lang === 'es' ? 'Media octava exacta' : 'Exact half-octave';
+    if (absSteps === 11) return lang === 'es' ? 'Quinta abierta (un pelito alta)' : 'Open fifth (slightly wide)';
+    if (absSteps === 12) return lang === 'es' ? 'Solo 2/3 de octava (aún falta)' : 'Only 2/3 of an octave';
   }
-  return `${c.toFixed(1)}¢ (${Math.pow(2, c / 1200).toFixed(3)}:1)`;
+  return lang === 'es' ? `${Math.round(c)} cents de distancia` : `${Math.round(c)} cents apart`;
 }
 
 function triggerNoteOn(keyIndex: number, velocity = 0.78): void {
@@ -717,10 +717,6 @@ function renderApp(): void {
   const v = VARIANTS[currentVariant];
   const piece = getSelectedPiece();
   const isComparing12 = currentVariant === 'estandar';
-  const compareTargetLabel =
-    savedMicrotonalVariant && savedMicrotonalVariant !== 'estandar'
-      ? `${VARIANTS[savedMicrotonalVariant].edo}-EDO`
-      : '18-EDO';
 
   app.innerHTML = `
     <div class="app-shell">
@@ -810,20 +806,22 @@ function renderApp(): void {
               ${
                 isComparing12
                   ? lang === 'es'
-                    ? `⇄ 12-EDO (→ ${compareTargetLabel})`
-                    : `⇄ 12-EDO (→ ${compareTargetLabel})`
-                  : `⇄ A/B: ${v.edo}-EDO ↔ 12-EDO`
+                    ? '⇄ Sonando Normal (Volver)'
+                    : '⇄ Normal Piano (Back)'
+                  : lang === 'es'
+                    ? '⇄ Comparar: Carrillo ↔ Normal'
+                    : '⇄ Compare: Carrillo ↔ Normal'
               }
             </button>
-            <button type="button" class="btn ${showPieceDossier ? 'active' : ''}" id="btn-toggle-dossier" style="width:112px">
+            <button type="button" class="btn ${showPieceDossier ? 'active' : ''}" id="btn-toggle-dossier" style="width:124px">
               ${
                 showPieceDossier
                   ? lang === 'es'
-                    ? '▴ Ocultar info'
-                    : '▴ Hide info'
+                    ? '▴ Ocultar historia'
+                    : '▴ Hide story'
                   : lang === 'es'
-                    ? '▾ Info obra'
-                    : '▾ Piece info'
+                    ? '▾ Sobre la pieza'
+                    : '▾ About piece'
               }
             </button>
           </div>
@@ -860,15 +858,15 @@ function renderApp(): void {
 
           <div class="dossier-columns">
             <div class="dossier-col">
-              <h4>${lang === 'es' ? '1. Contexto Histórico y Repertorio' : '1. Historical & Repertoire Context'}</h4>
+              <h4>${lang === 'es' ? '1. La historia detrás' : '1. The Story Behind It'}</h4>
               <p>${lang === 'es' ? piece.historicalContextEs : piece.historicalContextEn}</p>
             </div>
             <div class="dossier-col">
-              <h4>${lang === 'es' ? '2. Análisis Interválico y Acústico' : '2. Intervallic & Acoustic Analysis'}</h4>
+              <h4>${lang === 'es' ? '2. ¿Qué pasa en el sonido?' : '2. What Happens in the Sound?'}</h4>
               <p>${lang === 'es' ? piece.acousticAnalysisEs : piece.acousticAnalysisEn}</p>
             </div>
             <div class="dossier-col">
-              <h4>${lang === 'es' ? '3. Experimento de Escucha Activa' : '3. Active Listening Experiment'}</h4>
+              <h4>${lang === 'es' ? '3. Pruébalo tú mismo' : '3. Try It Yourself'}</h4>
               <p>${lang === 'es' ? piece.listeningExperimentEs : piece.listeningExperimentEn}</p>
             </div>
           </div>
@@ -968,7 +966,7 @@ function renderApp(): void {
         <div class="panel-card">
           <div class="panel-label">
             <span>${txt.eduMetamorphTitle}</span>
-            <span class="tabular">1 ${lang === 'es' ? 'tecla' : 'key'} = ${v.stepCents.toFixed(2)}¢</span>
+            <span class="tabular">${v.edo} ${lang === 'es' ? 'notas por octava' : 'notes per octave'}</span>
           </div>
           <div class="metamorph-box" id="metamorph-box">
             <div class="meta-col">
@@ -980,14 +978,14 @@ function renderApp(): void {
               <span class="mv" id="meta-v-12">—</span>
             </div>
             <div class="meta-col">
-              <span class="mk" id="meta-k-here">${txt.eduSoundingHere} (${v.edo}-EDO)</span>
+              <span class="mk" id="meta-k-here">${txt.eduSoundingHere}</span>
               <span class="mv highlight" id="meta-v-here">—</span>
             </div>
           </div>
           <div class="octave-ruler">
             <span>Do = 0</span>
-            <span class="mark-12">12 ${lang === 'es' ? 'teclas' : 'keys'} = ${((12 * 1200) / v.edo).toFixed(0)}¢</span>
-            <span class="mark-edo">${v.edo} ${lang === 'es' ? 'teclas = Octava 2:1 (1200¢)' : 'keys = True 2:1 Octave (1200¢)'}</span>
+            <span class="mark-12">${lang === 'es' ? 'En 12 teclas aún no completas la octava' : '12 keys is smaller than an octave'}</span>
+            <span class="mark-edo">${v.edo} ${lang === 'es' ? 'teclas = ¡Siguiente Do completo!' : 'keys = Next full C octave!'}</span>
           </div>
         </div>
 
@@ -1000,8 +998,8 @@ function renderApp(): void {
             <div class="circle-legend">
               ${
                 lang === 'es'
-                  ? 'Geometría en tiempo real de tus notas y acordes dentro de la octava.'
-                  : 'Real-time geometry of your active notes and chords inside the octave.'
+                  ? 'Cada puntito es un escalón antes de llegar al otro Do. Toca acordes para ver sus figuras.'
+                  : 'Each dot is a step before reaching the next C. Play chords to see their shapes.'
               }
             </div>
           </div>
@@ -1012,7 +1010,7 @@ function renderApp(): void {
       <section class="panel-card">
         <div class="panel-label">
           <span>${txt.acousticTitle}</span>
-          <span>AudioWorklet · 28 voces × 10 modos</span>
+          <span>${lang === 'es' ? 'Simulación física en vivo' : 'Live physical simulation'}</span>
         </div>
         <div class="calibration-grid">
           <div class="slider-item">
@@ -1099,29 +1097,29 @@ function renderApp(): void {
         <div class="modal-body">
           <p>${
             lang === 'es'
-              ? 'Escucha directamente los intervalos que definen la firma psicoacústica del piano de tercios de tono (18-EDO) frente al piano tradicional:'
-              : 'Audition the intervals that define the psychoacoustic signature of the 18-EDO third-tone piano compared to standard 12-EDO:'
+              ? 'Haz clic en cada botón para escuchar al instante qué hace tan distinto a este piano frente a uno común:'
+              : 'Click each button to hear right away what makes this piano sound so different from an ordinary one:'
           }</p>
           <div class="lab-grid">
             <div class="lab-card">
-              <h4>${lang === 'es' ? 'Tercera Neutra (11:9)' : 'Neutral Third (11:9)'}</h4>
-              <p>${lang === 'es' ? '5 pasos en 18-EDO = 333.3¢ (error de solo -14¢ vs. -47¢ en 12-EDO).' : '5 steps in 18-EDO = 333.3¢ (only -14¢ error vs -47¢ in 12-EDO).'}</p>
-              <button class="btn primary" data-demo-interval="5">▶ ${lang === 'es' ? 'Escuchar (+5 teclas)' : 'Audition (+5 keys)'}</button>
+              <h4>${lang === 'es' ? '1. Ni alegre ni triste' : '1. Neither happy nor sad'}</h4>
+              <p>${lang === 'es' ? 'Una nota intermedia preciosa que vive justo entre un acorde mayor y uno menor.' : 'A beautiful in-between note living right between bright major and wistful minor.'}</p>
+              <button class="btn primary" data-demo-interval="5">▶ ${lang === 'es' ? 'Escuchar (+5 teclas)' : 'Listen (+5 keys)'}</button>
             </div>
             <div class="lab-card">
-              <h4>${lang === 'es' ? 'Undécima Armónica (11:8)' : 'Harmonic 11th (11:8)'}</h4>
-              <p>${lang === 'es' ? '8 pasos en 18-EDO = 533.3¢ (error -18¢ vs. +49¢ en 12-EDO).' : '8 steps in 18-EDO = 533.3¢ (-18¢ error vs +49¢ in 12-EDO).'}</p>
-              <button class="btn primary" data-demo-interval="8">▶ ${lang === 'es' ? 'Escuchar (+8 teclas)' : 'Audition (+8 keys)'}</button>
+              <h4>${lang === 'es' ? '2. La nota escondida' : '2. The hidden note'}</h4>
+              <p>${lang === 'es' ? 'Un sonido natural de las cuerdas que en los pianos normales cae "en la grieta" entre dos teclas.' : 'A natural resonance of strings that normally falls right in the crack between two piano keys.'}</p>
+              <button class="btn primary" data-demo-interval="8">▶ ${lang === 'es' ? 'Escuchar (+8 teclas)' : 'Listen (+8 keys)'}</button>
             </div>
             <div class="lab-card">
-              <h4>${lang === 'es' ? 'Metamorfosis de la "Octava" (12 teclas)' : 'Metamorphosis of 12 Keys'}</h4>
-              <p>${lang === 'es' ? 'Una octava visual en el teclado (12 teclas) suena como sexta menor (800¢).' : 'A visual octave on the keyboard (12 keys) sounds as a minor sixth (800¢).'}</p>
-              <button class="btn primary" data-demo-interval="12">▶ ${lang === 'es' ? 'Escuchar (+12 teclas)' : 'Audition (+12 keys)'}</button>
+              <h4>${lang === 'es' ? '3. ¿Qué pasó con las 12 teclas?' : '3. What happened to 12 keys?'}</h4>
+              <p>${lang === 'es' ? 'Si abres la mano 12 teclas como siempre, ¡todavía no llegas al otro Do! Suena más cerrado.' : 'Spanning 12 keys like usual doesn’t reach the next C yet—it sounds closer and warmer.'}</p>
+              <button class="btn primary" data-demo-interval="12">▶ ${lang === 'es' ? 'Escuchar (+12 teclas)' : 'Listen (+12 keys)'}</button>
             </div>
             <div class="lab-card">
-              <h4>${lang === 'es' ? 'Octava Real 2:1 (18 teclas)' : 'True 2:1 Octave (18 keys)'}</h4>
-              <p>${lang === 'es' ? 'Resonancia simpática pura sin nube de quintas.' : 'Pure octave sympathetic resonance without fifth-based cloud.'}</p>
-              <button class="btn primary" data-demo-interval="18">▶ ${lang === 'es' ? 'Escuchar (+18 teclas)' : 'Audition (+18 keys)'}</button>
+              <h4>${lang === 'es' ? '4. El siguiente Do real' : '4. The true next C'}</h4>
+              <p>${lang === 'es' ? 'Al recorrer 18 teclas completas escuchas por fin el salto limpio y brillante de una octava.' : 'Spanning 18 full keys finally reaches the clean, ringing leap of a full octave!'}</p>
+              <button class="btn primary" data-demo-interval="18">▶ ${lang === 'es' ? 'Escuchar (+18 teclas)' : 'Listen (+18 keys)'}</button>
             </div>
           </div>
           <div style="margin-top:16px;display:flex;gap:8px;flex-wrap:wrap">
@@ -1186,11 +1184,11 @@ function bindEvents(): void {
     btn.classList.toggle('active', showPieceDossier);
     btn.textContent = showPieceDossier
       ? lang === 'es'
-        ? '▴ Ocultar info'
-        : '▴ Hide info'
+        ? '▴ Ocultar historia'
+        : '▴ Hide story'
       : lang === 'es'
-        ? '▾ Info obra'
-        : '▾ Piece info';
+        ? '▾ Sobre la pieza'
+        : '▾ About piece';
   });
 
   document.getElementById('select-tempo')?.addEventListener('change', (e) => {

@@ -3,182 +3,182 @@ export type Lang = 'es' | 'en';
 export const UI_TEXT = {
   es: {
     brandTitle: 'SONIDO 13 · PIANO METAMORFOSEADOR',
-    brandSub: 'Julián Carrillo · Carl Sauter (1958)',
+    brandSub: 'El piano mexicano que esconde notas nuevas entre las teclas de siempre · Julián Carrillo (1958)',
     creditBy: 'Recreación virtual por',
-    researchBtn: 'Investigación',
-    guideBtn: 'Cómo entenderlo',
-    labBtn: 'Laboratorio 18-EDO',
+    researchBtn: 'Historia',
+    guideBtn: 'Cómo funciona',
+    labBtn: 'Probar sonidos',
     midiBtn: 'MIDI',
-    midiConnected: 'MIDI activo',
-    variantLabel: '1. Elige el Piano (Colección Sauter 1958)',
-    anchorLabel: '2. Anclaje Tonal (Frecuencia base)',
-    pianolaTitle: '3. Pianola Animada y Repertorio',
-    repertoireStripLabel: 'Obras y Estudios',
-    autoSwitchVariant: 'Auto-ajustar piano de la obra',
-    abToggleBtn: '⇄ Comparar A/B: 18-EDO ↔ 12-EDO',
-    abActive12: '⇄ Escuchando 12-EDO (Volver a 18-EDO)',
-    play: 'Reproducir',
+    midiConnected: 'MIDI listo',
+    variantLabel: '1. Elige qué piano quieres tocar',
+    anchorLabel: '2. Registro del teclado (Graves / Agudos)',
+    pianolaTitle: '3. Pianola Animada',
+    repertoireStripLabel: 'Piezas para escuchar',
+    autoSwitchVariant: 'Cambiar al piano ideal de cada pieza',
+    abToggleBtn: '⇄ Comparar: Carrillo ↔ Normal',
+    abActive12: '⇄ Sonando Normal (Volver)',
+    play: 'Escuchar',
     pause: 'Pausar',
     stop: 'Detener',
-    speed: 'Tempo',
+    speed: 'Velocidad',
     exportScl: '.scl/.kbm',
-    showCarrilloNums: 'Números Carrillo',
-    showQwertyHints: 'Guía Teclado PC',
-    acousticTitle: 'Calibración Física del Arpa y Macillos (Modelado Modal + Stulov + FDN)',
-    hammer: 'Dureza de macillo',
-    hammerTip: 'Fieltro más blando suaviza batimientos agudos; más duro excita parciales altos',
-    unison: 'Anchura de unísono',
-    unisonTip: 'Desafinación entre las 3 cuerdas de cada nota (estrecha en 18-EDO para nitidez)',
-    sympathetic: 'Resonancia simpática',
-    sympatheticTip: 'Energía acoplada en cuerdas libres al pisar el pedal (octavas +18 y 10ª +24)',
-    inharmonicity: 'Rigidez de cuerda (B)',
-    inharmonicityTip: 'Estiramiento natural de parciales por el grosor del acero en 4.83 octavas',
-    railsback: 'Curva Railsback',
-    railsbackTip: 'Compensación psicoacústica de octavas en extremos grave y agudo',
-    soundboard: 'Tabla de pícea (FDN)',
-    soundboardTip: 'Resonancia cálida de madera de pícea alpina de media cola Sauter',
+    showCarrilloNums: 'Ver números de Carrillo en teclas',
+    showQwertyHints: 'Ver letras del teclado de tu compu',
+    acousticTitle: 'Personaliza el interior del piano (Fieltro, Cuerdas y Madera)',
+    hammer: 'Suavidad del martillo',
+    hammerTip: 'Más bajo suena dulce y aterciopelado; más alto suena brillante y firme',
+    unison: 'Vibración entre cuerdas',
+    unisonTip: 'Cada tecla golpea 3 cuerdas juntas: bájalo para máxima pureza o súbelo para más cuerpo',
+    sympathetic: 'Eco de cuerdas libres',
+    sympatheticTip: 'Al pisar el pedal, las demás cuerdas del arpa empiezan a cantar solas por simpatía',
+    inharmonicity: 'Cuerpo metálico',
+    inharmonicityTip: 'El brillo natural que tienen las cuerdas reales de acero y cobre',
+    railsback: 'Ajuste de extremos',
+    railsbackTip: 'Pequeño retoque de afinador para que los graves y agudos se oigan redondos',
+    soundboard: 'Resonancia de madera',
+    soundboardTip: 'Cuánto se siente el abrazo cálido de la caja de madera de abeto',
     volume: 'Volumen general',
-    notationTitle: 'Visor en Vivo · Sonido 13',
-    notationEmpty: 'Toca cualquier tecla, usa tu teclado (A–Ñ, Z/X octava) o inicia la Pianola ▶',
-    stepLabel: 'Grado Carrillo',
-    scale90Label: 'Sistema de 90',
-    freqLabel: 'Frecuencia',
-    nearest12Label: 'Nota 12-EDO + desvío',
-    inharmLabel: 'Rigidez B',
-    keyVisualLabel: 'Tecla física',
-    pedalUnaCorda: 'Una Corda (Shift)',
+    notationTitle: '¿Qué nota estás tocando?',
+    notationEmpty: 'Toca cualquier tecla o dale a ▶ Escuchar arriba',
+    stepLabel: 'Nota Carrillo',
+    scale90Label: 'Escala de 90',
+    freqLabel: 'Vibraciones',
+    nearest12Label: 'Nota conocida',
+    inharmLabel: 'Color cuerda',
+    keyVisualLabel: 'Tecla tocada',
+    pedalUnaCorda: 'Pedal suave (Shift)',
     pedalSostenuto: 'Sostenuto',
-    pedalSustain: 'Resonancia / Sustain (Espacio)',
-    eduMetamorphTitle: '¿Qué es la Metamorfosis?',
-    eduCircleTitle: 'Círculo Armónico de la Octava',
-    eduIntervalIdle: 'Toca 2 notas seguidas o un acorde para ver cómo se transforma el intervalo',
-    eduVisualSpan: 'Distancia en teclas',
-    eduNormalPiano: 'En un piano normal (12-EDO)',
-    eduSoundingHere: 'Suena aquí',
-    eduOctaveLegend: '● Punto dorado = Do real (Octava 2:1 · Grado 0)',
-    listenForPrefix: 'Qué escuchar:',
+    pedalSustain: 'Pedal de eco / Sustain (Espacio)',
+    eduMetamorphTitle: '¿Cómo transforma este piano lo que tocas?',
+    eduCircleTitle: 'Reloj de Notas de la Octava',
+    eduIntervalIdle: 'Toca dos teclas para comparar',
+    eduVisualSpan: 'Teclas de distancia',
+    eduNormalPiano: 'En un piano común sonaría',
+    eduSoundingHere: 'En este piano suena',
+    eduOctaveLegend: '● Punto dorado = Aquí vuelve a empezar el ciclo (Nota Do = 0)',
+    listenForPrefix: 'Fíjate en esto:',
     footerShortcuts:
-      'Teclado PC: <kbd>A</kbd>–<kbd>Ñ</kbd> (blancas y negras) · <kbd>Z</kbd>/<kbd>X</kbd> desplazar registro · <kbd>Espacio</kbd> pedal de resonancia · Ratón: arrastra sobre las teclas para glissando.',
+      'Toca con tu teclado: letras <kbd>A</kbd>–<kbd>Ñ</kbd> · <kbd>Z</kbd>/<kbd>X</kbd> mover hacia graves o agudos · <kbd>Espacio</kbd> pedal para dejar sonando las notas · Con el ratón puedes arrastrar sobre las teclas.',
     footerDisclaimer:
-      'Reconstrucción históricamente informada en DSP (Web Audio / AudioWorklet) basada en la colección Carl Sauter (1958) de Julián Carrillo resguardada en San Luis Potosí.',
-    labTitle: 'Laboratorio Acústico · Por qué 18-EDO no es solo desafinar',
-    guideTitle: 'Guía Rápida · Cómo entender y tocar el Piano Metamorfoseador',
+      'Instrumento virtual educativo inspirado en los pianos que el compositor mexicano Julián Carrillo mandó construir con Carl Sauter en 1958, hoy conservados en San Luis Potosí.',
+    labTitle: 'Escucha la diferencia en 4 ejemplos sencillos',
+    guideTitle: '¿Qué tiene de especial este piano? (Explicado fácil)',
     close: 'Cerrar',
-    compare18: 'Activar 18-EDO (Tercios)',
-    compare12: 'Activar 12-EDO (Estándar)',
+    compare18: 'Escuchar en Piano de Carrillo',
+    compare12: 'Escuchar en Piano Normal',
   },
   en: {
     brandTitle: 'SONIDO 13 · METAMORPHOSER PIANO',
-    brandSub: 'Julián Carrillo · Carl Sauter (1958)',
+    brandSub: 'The Mexican piano hiding brand-new notes inside familiar keys · Julián Carrillo (1958)',
     creditBy: 'Virtual recreation by',
-    researchBtn: 'Research',
+    researchBtn: 'Story & Info',
     guideBtn: 'How It Works',
-    labBtn: '18-EDO Lab',
+    labBtn: 'Try Sounds',
     midiBtn: 'MIDI',
     midiConnected: 'MIDI Ready',
-    variantLabel: '1. Choose Piano (Sauter 1958 Collection)',
-    anchorLabel: '2. Tonal Anchor (Reference Pitch)',
-    pianolaTitle: '3. Animated Pianola & Repertoire',
-    repertoireStripLabel: 'Works & Études',
-    autoSwitchVariant: 'Auto-select piece’s piano',
-    abToggleBtn: '⇄ Compare A/B: 18-EDO ↔ 12-EDO',
-    abActive12: '⇄ Hearing 12-EDO (Back to 18-EDO)',
-    play: 'Play',
+    variantLabel: '1. Pick which piano to play',
+    anchorLabel: '2. Keyboard range (Low / High)',
+    pianolaTitle: '3. Animated Player Piano',
+    repertoireStripLabel: 'Pieces to explore',
+    autoSwitchVariant: 'Auto-pick each piece’s ideal piano',
+    abToggleBtn: '⇄ Compare: Carrillo ↔ Normal',
+    abActive12: '⇄ Normal Piano (Switch back)',
+    play: 'Listen',
     pause: 'Pause',
     stop: 'Stop',
-    speed: 'Tempo',
+    speed: 'Speed',
     exportScl: '.scl/.kbm',
-    showCarrilloNums: 'Carrillo Numbers',
-    showQwertyHints: 'PC Key Hints',
-    acousticTitle: 'Physical Harp & Hammer Calibration (Modal + Stulov + FDN)',
-    hammer: 'Hammer Hardness',
-    hammerTip: 'Softer felt tames upper beating; harder felt excites higher partials',
-    unison: 'Unison Width',
-    unisonTip: 'Detuning across the 3 strings per key (kept tight in 18-EDO for clarity)',
-    sympathetic: 'Sympathetic Resonance',
-    sympatheticTip: 'Coupled energy in undamped strings when sustain is held (octaves +18, 10th +24)',
-    inharmonicity: 'String Stiffness (B)',
-    inharmonicityTip: 'Natural partial stretching from steel wire stiffness across 4.83 octaves',
-    railsback: 'Railsback Curve',
-    railsbackTip: 'Psychoacoustic octave stretching at bass and treble extremes',
-    soundboard: 'Spruce Soundboard (FDN)',
-    soundboardTip: 'Warm Alpine spruce soundboard radiation of a compact Sauter baby grand',
-    volume: 'Master Gain',
-    notationTitle: 'Live Readout · Sonido 13',
-    notationEmpty: 'Click any key, use your PC keyboard (A–;, Z/X shift), or press Play ▶',
-    stepLabel: 'Carrillo Degree',
-    scale90Label: '90-Division Scale',
-    freqLabel: 'Frequency',
-    nearest12Label: '12-EDO Ref + Cents',
-    inharmLabel: 'Stiffness B',
-    keyVisualLabel: 'Physical Key',
-    pedalUnaCorda: 'Una Corda (Shift)',
+    showCarrilloNums: 'Show Carrillo numbers on keys',
+    showQwertyHints: 'Show computer keyboard letters',
+    acousticTitle: 'Shape the piano’s physical body (Felt, Strings & Wood)',
+    hammer: 'Hammer softness',
+    hammerTip: 'Lower feels warm and mellow; higher sounds bright and crisp',
+    unison: 'String chorus',
+    unisonTip: 'Each key strikes 3 strings together: lower for pure clarity, higher for lush warmth',
+    sympathetic: 'Free-string echo',
+    sympatheticTip: 'When holding the pedal, other strings across the harp sing along on their own',
+    inharmonicity: 'Metallic ring',
+    inharmonicityTip: 'The natural shimmer of real tensioned steel and copper strings',
+    railsback: 'Extreme tuning',
+    railsbackTip: 'Subtle piano-tuner stretch so the deepest lows and highest highs sound sweet',
+    soundboard: 'Wood resonance',
+    soundboardTip: 'How much the warm spruce wood body embraces the sound',
+    volume: 'Master volume',
+    notationTitle: 'What note are you playing?',
+    notationEmpty: 'Click any key or press ▶ Listen above',
+    stepLabel: 'Carrillo Note',
+    scale90Label: 'Scale of 90',
+    freqLabel: 'Vibrations',
+    nearest12Label: 'Closest normal note',
+    inharmLabel: 'String tone',
+    keyVisualLabel: 'Key pressed',
+    pedalUnaCorda: 'Soft pedal (Shift)',
     pedalSostenuto: 'Sostenuto',
-    pedalSustain: 'Sustain / Resonance (Space)',
-    eduMetamorphTitle: 'What Is Musical Metamorphosis?',
-    eduCircleTitle: 'Octave Pitch-Class Circle',
-    eduIntervalIdle: 'Play 2 consecutive notes or a chord to see how the interval transforms',
-    eduVisualSpan: 'Key span',
-    eduNormalPiano: 'On a standard piano (12-EDO)',
-    eduSoundingHere: 'Sounds here as',
-    eduOctaveLegend: '● Gold dot = True C (2:1 Octave · Degree 0)',
-    listenForPrefix: 'What to listen for:',
+    pedalSustain: 'Sustain / Echo pedal (Space)',
+    eduMetamorphTitle: 'How does this piano transform what you play?',
+    eduCircleTitle: 'Octave Note Clock',
+    eduIntervalIdle: 'Play two keys to compare',
+    eduVisualSpan: 'Keys apart',
+    eduNormalPiano: 'On a normal piano',
+    eduSoundingHere: 'On this piano',
+    eduOctaveLegend: '● Gold dot = The cycle starts over here (True C = 0)',
+    listenForPrefix: 'Listen for this:',
     footerShortcuts:
-      'PC Keyboard: <kbd>A</kbd>–<kbd>;</kbd> · <kbd>Z</kbd>/<kbd>X</kbd> shift register · <kbd>Space</kbd> sustain pedal · Mouse: drag across keys for glissando.',
+      'Play with your computer keyboard: letters <kbd>A</kbd>–<kbd>;</kbd> · <kbd>Z</kbd>/<kbd>X</kbd> move lower or higher · <kbd>Space</kbd> hold sustain pedal · Drag your mouse across keys to glide.',
     footerDisclaimer:
-      'Historically informed DSP reconstruction (Web Audio / AudioWorklet) based on Julián Carrillo’s 1958 Carl Sauter collection preserved in San Luis Potosí, Mexico.',
-    labTitle: 'Acoustic Lab · Why 18-EDO Is More Than Detuning',
-    guideTitle: 'Interactive Guide · Understanding the Metamorphoser Piano',
+      'Educational virtual instrument inspired by the custom pianos Mexican composer Julián Carrillo commissioned from Carl Sauter in 1958, preserved in San Luis Potosí.',
+    labTitle: 'Hear the difference in 4 simple examples',
+    guideTitle: 'What makes this piano special? (In plain words)',
     close: 'Close',
-    compare18: 'Switch to 18-EDO (Third-Tones)',
-    compare12: 'Switch to 12-EDO (Standard)',
+    compare18: 'Switch to Carrillo Piano',
+    compare12: 'Switch to Normal Piano',
   },
 } as const;
 
 export const GUIDE_HTML = {
   es: `
     <p class="lead">
-      El <strong>Piano Metamorfoseador</strong> de Julián Carrillo parece por fuera un piano tradicional de 88 teclas blancas y negras, pero por dentro <strong>redefine la geometría del espacio musical</strong>. Aquí tienes las 4 claves para comprenderlo en un minuto:
+      Por fuera se ve idéntico a un piano común de 88 teclas blancas y negras, pero al tocarlo descubrirás un truco fascinante inventado por el músico mexicano <strong>Julián Carrillo</strong>: <strong>hay sonidos nuevos escondidos donde antes no cabían</strong>.
     </p>
     <div class="lab-grid">
       <div class="lab-card">
-        <h4>1. ¿Por qué conserva el teclado normal?</h4>
-        <p>Carrillo diseñó sus pianos para que un pianista clásico no tuviera que reaprender técnica desde cero: tocas con tus dedos de siempre y el instrumento <strong>metamorfosea</strong> automáticamente las distancias interválicas.</p>
+        <h4>1. Imagina una escalera con más escalones</h4>
+        <p>En un piano normal, para subir de un <em>Do</em> al siguiente <em>Do</em> más agudo (una octava) subes <strong>12 escalones</strong>. En este piano la misma altura se divide en <strong>18 escalones más bajitos</strong>. Son notas intermedias que en los pianos normales simplemente no existen.</p>
       </div>
       <div class="lab-card">
-        <h4>2. La regla de oro: 18 teclas = 1 octava</h4>
-        <p>En tercios de tono (<strong>18-EDO</strong>), cada tecla avanza <strong>66.67 cents</strong> (en vez de 100¢). Si abres la mano 12 teclas (una octava visual), solo recorres <strong>800 cents</strong> (una sexta menor). ¡Necesitas <strong>18 teclas</strong> (marcadas con punto dorado <code>0</code>) para duplicar la frecuencia!</p>
+        <h4>2. ¿Por qué dejó las mismas teclas de siempre?</h4>
+        <p>Para que cualquiera pudiera tocarlo sin tener que aprender un instrumento raro desde cero. Si tocas una canción conocida usando tus mismos dedos de siempre, el piano la <strong>"metamorfosea"</strong> (la redibuja con colores nuevos).</p>
       </div>
       <div class="lab-card">
-        <h4>3. ¿Cómo funciona la notación numérica?</h4>
-        <p>Carrillo eliminó pentagramas y sostenidos: <strong>Do es siempre <code>0</code></strong>. En tercios de tono las notas de una octava se numeran del <code>0</code> al <code>17</code> (o de 5 en 5: <code>0, 5, 10... 85</code> dentro de su escala unificada de 90 sonidos por octava).</p>
+        <h4>3. Sigue los puntos dorados (el número 0)</h4>
+        <p>Como ahora hacen falta <strong>18 teclas</strong> para llegar al siguiente <em>Do</em>, las teclas blancas ya no coinciden con Do-Re-Mi. Por eso Carrillo les puso números sencillos: <strong>el <code>0</code> con punto dorado marca cada nuevo Do</strong>, y luego cuentas del <code>1</code> al <code>17</code>.</p>
       </div>
       <div class="lab-card">
-        <h4>4. Prueba la comparación A/B en vivo</h4>
-        <p>Elige la pieza <strong>2 · Bach Metamorf.</strong> o <strong>5 · Claro de Luna</strong> en la barra superior, dale a <strong>▶ Reproducir</strong> y pulsa el botón <strong>⇄ Comparar A/B: 18-EDO ↔ 12-EDO</strong> mientras suena para escuchar la transformación al instante.</p>
+        <h4>4. La prueba más divertida (en 5 segundos)</h4>
+        <p>Arriba elige <strong>2 · Bach Metamorf.</strong> o <strong>5 · Claro de Luna</strong>, dale a <strong>▶ Escuchar</strong> y mientras suena aprieta el botón verde <strong>⇄ Comparar</strong>. ¡Vas a oír cómo la pieza cambia de universo en tiempo real!</p>
       </div>
     </div>
   `,
   en: `
     <p class="lead">
-      Julián Carrillo’s <strong>Metamorphoser Piano</strong> looks on the outside like a classic 88-key grand piano, yet inside it <strong>redefines musical geometry</strong>. Here are the 4 keys to understanding it in one minute:
+      On the outside it looks just like a classic 88-key piano, but the moment you touch it you’ll hear a clever trick invented by Mexican composer <strong>Julián Carrillo</strong>: <strong>brand-new notes tucked right in between the familiar ones</strong>.
     </p>
     <div class="lab-grid">
       <div class="lab-card">
-        <h4>1. Why keep a standard keyboard?</h4>
-        <p>Carrillo kept traditional white and black keys so pianists could use familiar fingerings while the instrument systematically <strong>metamorphoses</strong> every interval.</p>
+        <h4>1. Picture a staircase with smaller steps</h4>
+        <p>On a normal piano, climbing from one <em>C</em> to the next higher <em>C</em> (an octave) takes <strong>12 steps</strong>. On this piano, that exact same climb is split into <strong>18 gentler steps</strong>—unlocking expressive "in-between" colors standard pianos skip right over.</p>
       </div>
       <div class="lab-card">
-        <h4>2. Golden rule: 18 keys = 1 octave</h4>
-        <p>In third-tones (<strong>18-EDO</strong>), each key advances <strong>66.67 cents</strong> (instead of 100¢). Spanning 12 keys (a visual octave) yields <strong>800 cents</strong> (a minor sixth). You need <strong>18 keys</strong> (marked with a gold dot <code>0</code>) to reach a true 2:1 octave!</p>
+        <h4>2. Why keep normal white &amp; black keys?</h4>
+        <p>So anyone could sit down and play right away! When you play a familiar tune using your usual finger shapes, the piano automatically <strong>"metamorphoses"</strong> it into a brand-new sonic landscape.</p>
       </div>
       <div class="lab-card">
-        <h4>3. Numerical notation (Sonido 13)</h4>
-        <p>Carrillo replaced staffs and accidentals with numbers: <strong>C is always <code>0</code></strong>. In 18-EDO, pitches run <code>0</code> to <code>17</code> per octave (or by fives: <code>0, 5, 10... 85</code> in his unified 90-division system).</p>
+        <h4>3. Follow the gold dots (Note 0)</h4>
+        <p>Because it now takes <strong>18 keys</strong> to reach the next <em>C</em>, traditional note names don’t line up anymore. Carrillo solved this with simple numbers: <strong>every gold dot with <code>0</code> marks a true C</strong>, counting <code>0</code> through <code>17</code>.</p>
       </div>
       <div class="lab-card">
-        <h4>4. Try live A/B metamorphosis</h4>
-        <p>Select piece <strong>2 · Bach Metamorph.</strong> or <strong>5 · Moonlight</strong> in the repertoire bar, press <strong>▶ Play</strong>, and click <strong>⇄ Compare A/B: 18-EDO ↔ 12-EDO</strong> mid-playback to hear the transformation live.</p>
+        <h4>4. The most fun 5-second test</h4>
+        <p>Pick <strong>2 · Bach Metamorph.</strong> or <strong>5 · Moonlight</strong> at the top, hit <strong>▶ Listen</strong>, and click the green <strong>⇄ Compare</strong> button while it plays to hear the music shift worlds instantly!</p>
       </div>
     </div>
   `,
@@ -186,98 +186,94 @@ export const GUIDE_HTML = {
 
 export const RESEARCH_HTML = {
   es: `
-    <h2>Recreación virtual del piano de tercios de tono de Julián Carrillo</h2>
+    <h2>La aventura de Julián Carrillo y su «Sonido 13»</h2>
     <p class="lead">
-      Esta aplicación es una reconstrucción por <strong>modelado físico híbrido</strong> (banco modal de cuerdas, excitador no lineal de macillo, resonancia simpática acoplada y tabla armónica FDN) del <strong>piano metamorfoseador de tercios de tono (18-EDO)</strong> concebido por <strong>Julián Carrillo (1875–1965)</strong> y construido por la casa alemana <strong>Carl Sauter</strong> en 1958.
+      En 1895, siendo un joven estudiante de violín en México, <strong>Julián Carrillo (1875–1965)</strong> deslizó el filo de una navaja sobre una cuerda de su violín y descubrió que el oído humano podía distinguir muchísimas notas diminutas dentro de un solo tono. Llamó a ese hallazgo el <strong>Sonido 13</strong>: romper el límite de las 12 notas tradicionales de Occidente.
     </p>
     <div class="info-photo-grid">
       <figure class="info-figure">
         <img src="./images/julian-carrillo.jpg" alt="Retrato histórico autografiado de Julián Carrillo en París (1899)" />
         <figcaption>
           <strong>Julián Carrillo Trujillo (1875–1965)</strong><br />
-          Retrato autografiado en París (4 de septiembre de 1899), cuatro años después de sus primeros experimentos sobre la división del tono en la Ciudad de México (1895). <em>Fuente: Wikimedia Commons.</em>
+          Retrato autografiado en París en 1899, apenas cuatro años después de su célebre experimento con la cuerda de violín en la Ciudad de México. <em>Fuente: Wikimedia Commons.</em>
         </figcaption>
       </figure>
       <figure class="info-figure">
         <img src="./images/sauter-metamorfoseador.jpg" alt="Piano Metamorfoseador Carl Sauter conservado en el Centro Julián Carrillo de San Luis Potosí" style="object-position:center 48%" />
         <figcaption>
-          <strong>Piano Metamorfoseador Carl Sauter (1958)</strong><br />
-          Ejemplar original de la colección de 15 pianos fabricados en Spaichingen (Alemania) y resguardados en el <strong>Centro Julián Carrillo</strong> (San Luis Potosí), mostrando el emblema dorado <em>Sauter</em> y el medallón en relieve del compositor. <em>Documentación: W. Cannon-Brown (MTO 30.4, 2024).</em>
+          <strong>Uno de los pianos originales Carl Sauter (1958)</strong><br />
+          Conservado hoy en el <strong>Centro Julián Carrillo</strong> en San Luis Potosí, con el sello dorado <em>Sauter</em> y el medallón del maestro a la derecha. <em>Foto: W. Cannon-Brown (2024).</em>
         </figcaption>
       </figure>
     </div>
-    <div class="callout">
-      <strong>Transparencia organológica:</strong> Las fuentes académicas confirman que el modelo de 1958 de Carl Sauter era un piano de media cola (<em>baby grand</em>) de 88 teclas afinado en 18-EDO, conservado en el <strong>Centro Julián Carrillo de San Luis Potosí</strong>. Sin embargo, los planos originales del encordado y las frecuencias límite exactas de esa unidad permanecen inéditos. Por ello, este instrumento ofrece <strong>5 anclajes tonales seleccionables</strong> que recalibran automáticamente las frecuencias y la curva de inarmonicidad <em>B</em>.
-    </div>
-    <h3>1. Historia y lógica metamorfoseadora</h3>
+    <h3>Los 15 pianos mágicos de Bruselas (1958)</h3>
     <p>
-      Tras patentar sus pianos microtonales en 1940 y construir prototipos en México (c. 1947–1953, incluyendo la versión vertical de Federico Buschmann), Carrillo encargó a <strong>Carl Sauter</strong> (Spaichingen, Alemania) una serie de <strong>15 pianos metamorfoseadores</strong> presentados en la Expo 58 de Bruselas y en la Ciudad de México en 1959.
+      Durante décadas muchos pensaron que era imposible llevar esas micro-notas a un piano. En <strong>1958</strong>, Carrillo lo logró a lo grande junto al prestigioso taller alemán <strong>Carl Sauter</strong>: construyeron <strong>15 «pianos metamorfoseadores»</strong> que causaron sensación en la Exposición Universal de Bruselas y en París (donde grabó su <em>Concertino en tercios de tono</em> con el pianista Bernard de Flavigny).
     </p>
     <p>
-      Carrillo conservó intencionadamente el <strong>teclado tradicional de teclas blancas y negras</strong>: así, un pianista clásico ejecuta digitaciones habituales y el instrumento transforma sistemáticamente todos los intervalos (<em>Leyes de metamorfosis musicales</em>, 1949). En el piano de tercios de tono, recorrer físicamente una octava tradicional (12 teclas) produce dos tercios de octava sonora (800 cents, equivalente a una sexta menor), mientras que una octava real (2:1) exige recorrer <strong>18 teclas</strong>.
+      Mientras la mayoría eran pianos verticales (incluyendo uno asombroso cuyas 96 teclas enteras caben dentro de una sola octava), <strong>el piano de tercios de tono fue construido como un elegante piano de media cola de 88 teclas</strong>.
     </p>
-    <h3>2. Acústica del 18-EDO en 4.83 octavas</h3>
+    <h3>¿Por qué simulamos la madera y las cuerdas en vez de usar grabaciones?</h3>
+    <p>
+      Si tomas grabaciones de un piano común y solo les cambias el tono por computadora, suena artificial porque un piano real es un cuerpo vivo donde todas las cuerdas vibran juntas. Al meter 88 cuerdas en menos de 5 octavas:
+    </p>
     <ul>
-      <li><strong>Inarmonicidad homogénea:</strong> Al comprimir 88 cuerdas en 4.83 octavas (p. ej. 58.27 Hz a 1661.22 Hz con Do4 en tecla 40), el coeficiente de rigidez <em>B</em> se mantiene en la franja más favorable (~0.00018 a ~0.00373), produciendo un timbre más homogéneo que un media cola de 12-EDO.</li>
-      <li><strong>Resonancia simpática diáfana:</strong> El 18-EDO conserva intacta la escala de tonos enteros (200 y 400 cents), pero carece de quinta justa (3:2) y cuarta justa (4:3). Al pisar el pedal de resonancia, desaparece la nube de quintas del piano estándar y el halo simpático se concentra en octavas (+18, +36 teclas) y décima mayor (+24 teclas).</li>
-      <li><strong>Aspereza sensorial y unísono:</strong> Entre Do6 y Sol6, dos teclas contiguas (66.67 cents) baten cerca del pico de máxima aspereza psicoacústica (~0.25 CBW). Por eso el control fino de <em>Unison Width</em> y <em>Dureza de macillo</em> es crucial para la nitidez microtonal.</li>
+      <li><strong>Las cuerdas cantan más parejas:</strong> No hay cuerdas ultracortas chillonas ni cables exageradamente gruesos; todo el piano suena cálido y equilibrado.</li>
+      <li><strong>Un eco más cristalino al pisar el pedal:</strong> Al no existir algunos acordes habituales del piano común, cuando pisas el pedal las demás cuerdas responden con un brillo mucho más limpio y transparente.</li>
     </ul>
-    <h3>3. Referencia fonográfica</h3>
-    <p>
-      La referencia sonora histórica principal es el <em>Concertino en tercios de tono</em> para piano «Metamorfoseador Carrillo» y orquesta, grabado para <strong>Philips</strong> por el pianista <strong>Bernard de Flavigny</strong> y la Orchestre de l'Association des Concerts Lamoureux bajo la dirección del propio Julián Carrillo.
-    </p>
+    <div class="callout">
+      <strong>Nota curiosa sobre las 5 afinaciones disponibles:</strong> Como los planos detallados de fábrica siguen resguardados en archivo en San Luis Potosí, incluimos en el menú superior las 5 maneras históricas más lógicas de acomodar las notas en las 88 teclas para que puedas explorarlas todas.
+    </div>
     <div style="margin-top:18px;padding-top:14px;border-top:1px solid rgba(212,175,106,0.25);display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;">
-      <span style="font-size:0.82rem;color:#aba08f;">Recreación virtual desarrollada por <a href="https://www.instagram.com/laurorobles/" target="_blank" rel="noopener noreferrer" style="color:#f2d28b;">@laurorobles</a> · <a href="https://extasisrecords.bandcamp.com" target="_blank" rel="noopener noreferrer" style="color:#f2d28b;">@extasisrecords</a></span>
+      <span style="font-size:0.82rem;color:#aba08f;">Recreación virtual por <a href="https://www.instagram.com/laurorobles/" target="_blank" rel="noopener noreferrer" style="color:#f2d28b;">@laurorobles</a> · <a href="https://extasisrecords.bandcamp.com" target="_blank" rel="noopener noreferrer" style="color:#f2d28b;">@extasisrecords</a></span>
       <a href="./investigacion.html" target="_blank" rel="noopener noreferrer" class="btn primary" style="text-decoration:none;display:inline-flex;align-items:center;gap:6px;">
-        📄 Abrir Anexo de Investigación Completo ↗
+        📄 Ver Anexo de Investigación Académica Completo ↗
       </a>
     </div>
   `,
   en: `
-    <h2>Virtual Reconstruction of Julián Carrillo’s Third-Tone Piano</h2>
+    <h2>Julián Carrillo’s Quest for the “13th Sound”</h2>
     <p class="lead">
-      This application is a <strong>hybrid physical modeling</strong> reconstruction (modal string bank, nonlinear hammer exciter, coupled sympathetic resonance, and FDN spruce soundboard) of the <strong>third-tone metamorphoser piano (18-EDO)</strong> conceived by <strong>Julián Carrillo (1875–1965)</strong> and built by <strong>Carl Sauter</strong> in 1958.
+      In 1895, as a young violin student in Mexico City, <strong>Julián Carrillo (1875–1965)</strong> slid the edge of a pocketknife along a violin string and realized the human ear could hear dozens of tiny, expressive notes inside a single whole step. He called this breakthrough <strong>Sonido 13</strong> ("The 13th Sound")—breaking past Western music’s 12-note ceiling.
     </p>
     <div class="info-photo-grid">
       <figure class="info-figure">
         <img src="./images/julian-carrillo.jpg" alt="Autographed historical portrait of Julián Carrillo in Paris (1899)" />
         <figcaption>
           <strong>Julián Carrillo Trujillo (1875–1965)</strong><br />
-          Autographed portrait in Paris (September 4, 1899), four years after his initial microtonal string experiments in Mexico City (1895). <em>Source: Wikimedia Commons.</em>
+          Autographed portrait in Paris (1899), just four years after his famous violin-string experiment in Mexico City. <em>Source: Wikimedia Commons.</em>
         </figcaption>
       </figure>
       <figure class="info-figure">
         <img src="./images/sauter-metamorfoseador.jpg" alt="Carl Sauter Metamorphoser Piano at the Centro Julián Carrillo in San Luis Potosí" style="object-position:center 48%" />
         <figcaption>
-          <strong>Carl Sauter Metamorphoser Piano (1958)</strong><br />
-          Original instrument from the 15-piano series built in Spaichingen (Germany) and preserved at the <strong>Centro Julián Carrillo</strong> (San Luis Potosí), featuring the brass <em>Sauter</em> script emblem and Carrillo’s relief medallion. <em>Doc.: W. Cannon-Brown (MTO 30.4, 2024).</em>
+          <strong>An original Carl Sauter piano (1958)</strong><br />
+          Preserved today at the <strong>Centro Julián Carrillo</strong> in San Luis Potosí, showing the gold <em>Sauter</em> script and Carrillo’s bronze medallion. <em>Photo: W. Cannon-Brown (2024).</em>
         </figcaption>
       </figure>
     </div>
-    <div class="callout">
-      <strong>Organological transparency:</strong> Academic sources confirm that the 1958 Carl Sauter unit was an 88-key <em>baby grand</em> tuned in 18-EDO, preserved today at the <strong>Centro Julián Carrillo in San Luis Potosí</strong>. Because the original stringing plans and exact boundary pitches remain unpublished, this instrument provides <strong>5 selectable tonal anchors</strong> that dynamically recalibrate frequencies and the inharmonicity curve <em>B</em>.
-    </div>
-    <h3>1. History & Metamorphoser Logic</h3>
+    <h3>The 15 Wonder Pianos of Brussels (1958)</h3>
     <p>
-      After patenting his microtonal pianos in 1940 and building Mexican prototypes (c. 1947–1953), Carrillo commissioned <strong>Carl Sauter</strong> (Spaichingen, Germany) to build <strong>15 metamorphoser pianos</strong> premiered at Expo 58 in Brussels and exhibited in Mexico City in 1959.
+      For decades skeptics claimed microtones could never work on a piano. In <strong>1958</strong>, Carrillo proved them wrong alongside renowned German maker <strong>Carl Sauter</strong>, unveiling <strong>15 custom "metamorphoser pianos"</strong> that amazed audiences at the Brussels World’s Fair and in Paris (where pianist Bernard de Flavigny recorded Carrillo’s <em>Concertino in Third-Tones</em>).
     </p>
     <p>
-      Carrillo intentionally preserved the <strong>traditional 88-key white-and-black layout</strong> so a classically trained pianist can play familiar fingerings while the instrument systematically transforms every interval (<em>Laws of Musical Metamorphosis</em>, 1949). Spanning 12 keys yields 800 cents (a minor sixth), while a true octave (2:1) spans <strong>18 keys</strong>.
+      While most were uprights (including a jaw-dropping 96-key model whose entire keyboard zooms into one single octave), <strong>the third-tone piano was built as an elegant 88-key baby grand</strong>.
     </p>
-    <h3>2. Acoustics of 18-EDO Across 4.83 Octaves</h3>
+    <h3>Why simulate real wood &amp; strings instead of using recordings?</h3>
+    <p>
+      Simply pitch-shifting recordings of a normal piano sounds fake because a real piano is a living wooden body where every string listens to the others. Packing 88 strings into under 5 octaves changes its voice naturally:
+    </p>
     <ul>
-      <li><strong>Homogeneous inharmonicity:</strong> Compressing 88 strings into 4.83 octaves keeps string stiffness <em>B</em> in the acoustic sweet spot (~0.00018 to ~0.00373), yielding a warmer, less bell-like treble than a standard 12-EDO baby grand.</li>
-      <li><strong>Transparent sympathetic halo:</strong> 18-EDO preserves the whole-tone scale (200 & 400 cents) but omits the perfect fifth (3:2) and fourth (4:3). Depressing the sustain pedal produces a clean halo centered on octaves (+18, +36 keys) and major tenths (+24 keys).</li>
-      <li><strong>Sensory roughness & unison control:</strong> In the upper register, adjacent 66.67-cent keys beat near peak psychoacoustic roughness (~0.25 CBW), making tight <em>Unison Width</em> and <em>Hammer Hardness</em> essential for microtonal clarity.</li>
+      <li><strong>Smoother, warmer tone end-to-end:</strong> Without ultra-short high strings or super-thick bass coils, the whole keyboard sings with balanced chamber warmth.</li>
+      <li><strong>A clearer echo when holding the pedal:</strong> Because its strings line up in a fresh geometry, pressing the sustain pedal creates a transparent, bell-clear halo instead of a heavy cloud.</li>
     </ul>
-    <h3>3. Historical Recording Reference</h3>
-    <p>
-      The primary historical audio reference is the <em>Concertino in Third-Tones</em> for Metamorphoser Piano and Orchestra, recorded for <strong>Philips</strong> by pianist <strong>Bernard de Flavigny</strong> with the Orchestre de l'Association des Concerts Lamoureux conducted by Julián Carrillo.
-    </p>
+    <div class="callout">
+      <strong>Why are there 5 range options?</strong> Because the factory stringing blueprints remain unpublished in San Luis Potosí’s archives, the top menu lets you explore the 5 most natural historical ways to place those notes across the 88 keys.
+    </div>
     <div style="margin-top:18px;padding-top:14px;border-top:1px solid rgba(212,175,106,0.25);display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;">
-      <span style="font-size:0.82rem;color:#aba08f;">Virtual instrument created by <a href="https://www.instagram.com/laurorobles/" target="_blank" rel="noopener noreferrer" style="color:#f2d28b;">@laurorobles</a> · <a href="https://extasisrecords.bandcamp.com" target="_blank" rel="noopener noreferrer" style="color:#f2d28b;">@extasisrecords</a></span>
+      <span style="font-size:0.82rem;color:#aba08f;">Virtual instrument by <a href="https://www.instagram.com/laurorobles/" target="_blank" rel="noopener noreferrer" style="color:#f2d28b;">@laurorobles</a> · <a href="https://extasisrecords.bandcamp.com" target="_blank" rel="noopener noreferrer" style="color:#f2d28b;">@extasisrecords</a></span>
       <a href="./investigacion.html" target="_blank" rel="noopener noreferrer" class="btn primary" style="text-decoration:none;display:inline-flex;align-items:center;gap:6px;">
-        📄 Open Full Research Annex (HTML) ↗
+        📄 Open Full Academic &amp; Acoustic Research Annex ↗
       </a>
     </div>
   `,
