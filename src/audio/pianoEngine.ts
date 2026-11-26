@@ -15,6 +15,7 @@ export class PianoEngine {
   private worklet: AudioWorkletNode | null = null;
   private analyser: AnalyserNode | null = null;
   private ready = false;
+  private initPromise: Promise<void> | null = null;
   private pendingParams: Partial<PianoParams> = {};
   private midiAccess: MIDIAccess | null = null;
   private onMidiNoteCallback: ((keyIndex: number, velocity: number, isOn: boolean) => void) | null = null;
@@ -28,30 +29,37 @@ export class PianoEngine {
       return;
     }
 
-    this.ctx = new AudioContext({ latencyHint: 'interactive' });
-    const workletUrl = `${import.meta.env.BASE_URL}piano-worklet.js`;
-    await this.ctx.audioWorklet.addModule(workletUrl);
-
-    this.worklet = new AudioWorkletNode(this.ctx, 'sonido13-piano-processor', {
-      numberOfInputs: 0,
-      numberOfOutputs: 1,
-      outputChannelCount: [2],
-    });
-
-    this.analyser = this.ctx.createAnalyser();
-    this.analyser.fftSize = 1024;
-    this.analyser.smoothingTimeConstant = 0.8;
-
-    this.worklet.connect(this.analyser);
-    this.analyser.connect(this.ctx.destination);
-
-    this.ready = true;
-
-    // Flush any parameters set before init
-    for (const [name, value] of Object.entries(this.pendingParams)) {
-      this.setParam(name as keyof PianoParams, value as number);
+    if (this.initPromise) {
+      return this.initPromise;
     }
-    this.pendingParams = {};
+
+    this.initPromise = (async () => {
+      this.ctx = new AudioContext({ latencyHint: 'interactive' });
+      const workletUrl = `${import.meta.env.BASE_URL}piano-worklet.js`;
+      await this.ctx.audioWorklet.addModule(workletUrl);
+
+      this.worklet = new AudioWorkletNode(this.ctx, 'sonido13-piano-processor', {
+        numberOfInputs: 0,
+        numberOfOutputs: 1,
+        outputChannelCount: [2],
+      });
+
+      this.analyser = this.ctx.createAnalyser();
+      this.analyser.fftSize = 1024;
+      this.analyser.smoothingTimeConstant = 0.8;
+
+      this.worklet.connect(this.analyser);
+      this.analyser.connect(this.ctx.destination);
+
+      this.ready = true;
+
+      for (const [name, value] of Object.entries(this.pendingParams)) {
+        this.setParam(name as keyof PianoParams, value as number);
+      }
+      this.pendingParams = {};
+    })();
+
+    return this.initPromise;
   }
 
   isReady(): boolean {

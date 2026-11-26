@@ -17,7 +17,7 @@ import { HarpCanvas } from './ui/harpCanvas';
 // Application State
 let lang: Lang = 'es';
 let currentVariant: VariantId = 'tercios';
-let savedMicrotonalVariant: VariantId = 'tercios'; // Remembered for instant A/B vs 12-EDO!
+let savedMicrotonalVariant: VariantId = 'tercios';
 let currentAnchor: AnchorId = 'c4-40';
 let railsbackStretch = 1.0;
 let showCarrilloNumbers = true;
@@ -28,6 +28,16 @@ let qwertyBaseIndex = 39; // C4 on 88-key board; Z/X shifts by ±12 keys
 let sustainDown = false;
 let unaCordaDown = false;
 let midiConnected = false;
+
+// Persist slider values across re-renders so UI state stays 100% consistent
+const uiParams = {
+  hammerHardness: 0.55,
+  unisonWidth: 0.35,
+  sympathetic: 0.55,
+  inharmonicityScale: 1.0,
+  soundboardMix: 0.42,
+  masterGain: 0.72,
+};
 
 let keys: KeyInfo[] = buildKeyboardLayout(currentVariant, currentAnchor, railsbackStretch, lang);
 const activeKeys = new Set<number>();
@@ -75,6 +85,11 @@ const heldQwerty = new Map<string, number>();
 
 function t() {
   return UI_TEXT[lang];
+}
+
+function setText(id: string, val: string): void {
+  const el = document.getElementById(id);
+  if (el && el.textContent !== val) el.textContent = val;
 }
 
 function downloadFile(filename: string, content: string): void {
@@ -134,17 +149,17 @@ function describeSoundingInterval(cents: number, edo: number, steps: number): st
   if (absSteps === edo * 2) return lang === 'es' ? `Doble octava 4:1 (${c.toFixed(0)}¢)` : `Double Octave 4:1 (${c.toFixed(0)}¢)`;
   if (edo === 18) {
     if (absSteps === 1) return lang === 'es' ? 'Tercio de tono (66.7¢)' : 'Third-tone (66.7¢)';
-    if (absSteps === 2) return lang === 'es' ? 'Dos tercios de tono (133.3¢)' : 'Two third-tones (133.3¢)';
-    if (absSteps === 3) return lang === 'es' ? 'Tono entero exacto (200.0¢)' : 'Exact whole tone (200.0¢)';
-    if (absSteps === 5) return lang === 'es' ? 'Tercera neutra ≈ 11:9 (333.3¢)' : 'Neutral third ≈ 11:9 (333.3¢)';
-    if (absSteps === 6) return lang === 'es' ? 'Tercera mayor exacta (400.0¢)' : 'Exact major third (400.0¢)';
-    if (absSteps === 7) return lang === 'es' ? 'Cuasi-cuarta (466.7¢, −33¢)' : 'Quasi-fourth (466.7¢, −33¢)';
-    if (absSteps === 8) return lang === 'es' ? 'Undécima armónica ≈ 11:8 (533.3¢)' : 'Harmonic 11th ≈ 11:8 (533.3¢)';
-    if (absSteps === 9) return lang === 'es' ? 'Tritono exacto (600.0¢)' : 'Exact tritone (600.0¢)';
-    if (absSteps === 11) return lang === 'es' ? 'Cuasi-quinta (733.3¢, +31¢)' : 'Quasi-fifth (733.3¢, +31¢)';
-    if (absSteps === 12) return lang === 'es' ? '2/3 de octava / 6ª menor (800.0¢)' : '2/3 Octave / Minor 6th (800.0¢)';
+    if (absSteps === 2) return lang === 'es' ? 'Dos tercios (133.3¢)' : 'Two third-tones (133.3¢)';
+    if (absSteps === 3) return lang === 'es' ? 'Tono entero exacto (200¢)' : 'Exact whole tone (200¢)';
+    if (absSteps === 5) return lang === 'es' ? '3ª neutra ≈ 11:9 (333.3¢)' : 'Neutral 3rd ≈ 11:9 (333.3¢)';
+    if (absSteps === 6) return lang === 'es' ? '3ª mayor exacta (400¢)' : 'Exact major 3rd (400¢)';
+    if (absSteps === 7) return lang === 'es' ? 'Cuasi-4ª (466.7¢, −33¢)' : 'Quasi-4th (466.7¢, −33¢)';
+    if (absSteps === 8) return lang === 'es' ? '11ª armónica ≈ 11:8 (533.3¢)' : 'Harmonic 11th ≈ 11:8 (533.3¢)';
+    if (absSteps === 9) return lang === 'es' ? 'Tritono exacto (600¢)' : 'Exact tritone (600¢)';
+    if (absSteps === 11) return lang === 'es' ? 'Cuasi-5ª (733.3¢, +31¢)' : 'Quasi-5th (733.3¢, +31¢)';
+    if (absSteps === 12) return lang === 'es' ? '2/3 octava / 6ª m (800¢)' : '2/3 Octave / m6 (800¢)';
   }
-  return `${c.toFixed(1)}¢ (${(Math.pow(2, c / 1200)).toFixed(3)}:1)`;
+  return `${c.toFixed(1)}¢ (${Math.pow(2, c / 1200).toFixed(3)}:1)`;
 }
 
 function triggerNoteOn(keyIndex: number, velocity = 0.78): void {
@@ -194,16 +209,23 @@ function updateKeyVisual(keyIndex: number, isActive: boolean): void {
   if (el) el.classList.toggle('active', isActive);
 }
 
+// Updates ONLY textContent inside the pre-built 6-column HUD — ZERO DOM reflow / size change!
 function updateNotationHud(): void {
-  const hud = document.getElementById('notation-hud');
-  if (!hud) return;
-  const txt = t();
+  const v = VARIANTS[currentVariant];
+  setText('hud-k-step', `${t().stepLabel} (0–${v.edo - 1})`);
+  setText('hud-k-90', v.edo === 18 ? t().scale90Label : lang === 'es' ? 'Paso EDO' : 'EDO Step');
+
   if (!lastPlayedKey) {
-    hud.innerHTML = `<span class="hud-empty">${txt.notationEmpty}</span>`;
+    setText('hud-v-step', '—');
+    setText('hud-v-90', v.edo === 18 ? '—' : `${v.stepCents.toFixed(1)}¢`);
+    setText('hud-v-freq', '— Hz');
+    setText('hud-v-12', '—');
+    setText('hud-v-b', '—');
+    setText('hud-v-key', '—');
     return;
   }
+
   const k = lastPlayedKey;
-  const v = VARIANTS[currentVariant];
   const centsStr =
     k.centsFromNearest12 === 0
       ? '0¢'
@@ -211,44 +233,19 @@ function updateNotationHud(): void {
         ? `+${k.centsFromNearest12}¢`
         : `${k.centsFromNearest12}¢`;
 
-  hud.innerHTML = `
-    <div class="hud-metric">
-      <span class="k">${txt.stepLabel} (0–${v.edo - 1})</span>
-      <span class="v">${k.carrilloStep} <small style="opacity:.65">oct ${k.carrilloOctave}</small></span>
-    </div>
-    ${
-      k.carrillo90 !== null
-        ? `<div class="hud-metric">
-            <span class="k">${txt.scale90Label}</span>
-            <span class="v">${k.carrillo90}</span>
-          </div>`
-        : ''
-    }
-    <div class="hud-metric">
-      <span class="k">${txt.freqLabel}</span>
-      <span class="v">${k.freqHz.toFixed(2)} Hz</span>
-    </div>
-    <div class="hud-metric">
-      <span class="k">${txt.nearest12Label}</span>
-      <span class="v">${k.nearest12Name} (${centsStr})</span>
-    </div>
-    <div class="hud-metric">
-      <span class="k">${txt.inharmLabel}</span>
-      <span class="v">${k.inharmonicityB.toFixed(5)}</span>
-    </div>
-    <div class="hud-metric">
-      <span class="k">${txt.keyVisualLabel}</span>
-      <span class="v">#${k.keyNumber} (${k.visualName})</span>
-    </div>
-  `;
+  setText('hud-v-step', `${k.carrilloStep} · oct ${k.carrilloOctave}`);
+  setText('hud-v-90', k.carrillo90 !== null ? String(k.carrillo90) : `${v.stepCents.toFixed(1)}¢`);
+  setText('hud-v-freq', `${k.freqHz.toFixed(2)} Hz`);
+  setText('hud-v-12', `${k.nearest12Name} (${centsStr})`);
+  setText('hud-v-b', k.inharmonicityB.toFixed(5));
+  setText('hud-v-key', `#${k.keyNumber} (${k.visualName})`);
 }
 
+// Updates ONLY textContent inside the pre-built 3-column Metamorphosis grid — ZERO size change!
 function updateMetamorphosisBox(): void {
-  const box = document.getElementById('metamorph-box');
-  if (!box) return;
-  const txt = t();
+  const v = VARIANTS[currentVariant];
+  setText('meta-k-here', `${t().eduSoundingHere} (${v.edo}-EDO)`);
 
-  // Pick either lowest & highest simultaneously active keys, or prevPlayedKey & lastPlayedKey
   let kA: KeyInfo | null = null;
   let kB: KeyInfo | null = null;
   if (activeKeys.size >= 2) {
@@ -261,29 +258,19 @@ function updateMetamorphosisBox(): void {
   }
 
   if (!kA || !kB) {
-    box.innerHTML = `<div style="grid-column:1/-1;font-size:0.75rem;color:var(--text-muted);font-style:italic;">${txt.eduIntervalIdle}</div>`;
+    setText('meta-v-span', '—');
+    setText('meta-v-12', lang === 'es' ? 'Toca 2 teclas o acorde' : 'Play 2 keys or chord');
+    setText('meta-v-here', '—');
     return;
   }
 
   const diffKeys = kB.index - kA.index;
   const sign = diffKeys > 0 ? '+' : '';
   const centsReal = 1200 * Math.log2(kB.freqHz / kA.freqHz);
-  const v = VARIANTS[currentVariant];
 
-  box.innerHTML = `
-    <div class="meta-col">
-      <span class="mk">${txt.eduVisualSpan}</span>
-      <span class="mv">${sign}${diffKeys} ${lang === 'es' ? 'teclas' : 'keys'} (#${kA.keyNumber}→#${kB.keyNumber})</span>
-    </div>
-    <div class="meta-col">
-      <span class="mk">${txt.eduNormalPiano}</span>
-      <span class="mv">${describe12EdoInterval(diffKeys)}</span>
-    </div>
-    <div class="meta-col">
-      <span class="mk">${txt.eduSoundingHere} (${v.edo}-EDO)</span>
-      <span class="mv highlight">${describeSoundingInterval(centsReal, v.edo, diffKeys)}</span>
-    </div>
-  `;
+  setText('meta-v-span', `${sign}${diffKeys} (${kA.keyNumber}→${kB.keyNumber})`);
+  setText('meta-v-12', describe12EdoInterval(diffKeys));
+  setText('meta-v-here', describeSoundingInterval(centsReal, v.edo, diffKeys));
 }
 
 function updatePitchCircle(): void {
@@ -291,11 +278,10 @@ function updatePitchCircle(): void {
   if (!svg) return;
   const v = VARIANTS[currentVariant];
   const edo = v.edo;
-  const cx = 46;
-  const cy = 46;
-  const r = 36;
+  const cx = 41;
+  const cy = 41;
+  const r = 33;
 
-  // Collect active pitch classes (carrilloStep)
   const activeSteps = new Set<number>();
   activeKeys.forEach((idx) => {
     if (keys[idx]) activeSteps.add(keys[idx].carrilloStep);
@@ -305,9 +291,8 @@ function updatePitchCircle(): void {
   }
 
   const parts: string[] = [];
-  parts.push(`<circle cx="${cx}" cy="${cy}" r="${r}" fill="#100e0c" stroke="rgba(212,175,106,0.32)" stroke-width="1.5" />`);
+  parts.push(`<circle cx="${cx}" cy="${cy}" r="${r}" fill="#0e0c0a" stroke="rgba(212,175,106,0.32)" stroke-width="1.5" />`);
 
-  // Polygon connecting active pitch classes when 2+ notes are held
   if (activeSteps.size >= 2) {
     const sorted = Array.from(activeSteps).sort((a, b) => a - b);
     const pts = sorted
@@ -316,12 +301,9 @@ function updatePitchCircle(): void {
         return `${(cx + r * Math.cos(ang)).toFixed(1)},${(cy + r * Math.sin(ang)).toFixed(1)}`;
       })
       .join(' ');
-    parts.push(
-      `<polygon points="${pts}" fill="rgba(212,175,106,0.2)" stroke="#f2d28b" stroke-width="1.6" />`
-    );
+    parts.push(`<polygon points="${pts}" fill="rgba(212,175,106,0.2)" stroke="#f2d28b" stroke-width="1.5" />`);
   }
 
-  // Draw ticks (for 96-EDO draw 24 major ticks so it stays crisp)
   const tickCount = edo > 36 ? 24 : edo;
   for (let i = 0; i < tickCount; i++) {
     const stepVal = edo > 36 ? i * 4 : i;
@@ -330,19 +312,19 @@ function updatePitchCircle(): void {
     const py = cy + r * Math.sin(ang);
     const isZero = i === 0;
     const isHit = activeSteps.has(stepVal);
-    const dotR = isHit ? 4.2 : isZero ? 3.2 : 1.8;
+    const dotR = isHit ? 4.0 : isZero ? 3.0 : 1.7;
     const fill = isHit ? '#f2d28b' : isZero ? '#c87b4b' : 'rgba(212,175,106,0.45)';
     parts.push(`<circle cx="${px.toFixed(1)}" cy="${py.toFixed(1)}" r="${dotR}" fill="${fill}" />`);
   }
 
   parts.push(
-    `<text x="${cx}" y="${cy + 4}" text-anchor="middle" fill="#aba08f" font-family="JetBrains Mono,monospace" font-size="9">${edo}-EDO</text>`
+    `<text x="${cx}" y="${cy + 3.5}" text-anchor="middle" fill="#a59a88" font-family="JetBrains Mono,monospace" font-size="8.5">${edo}-EDO</text>`
   );
 
   svg.innerHTML = parts.join('');
 }
 
-// Falling-note Pianola Roll renderer (aligned 1:1 with keyboard width)
+// Falling-note Pianola Roll renderer
 function startRollLoop(): void {
   cancelAnimationFrame(rollRaf);
   const drawRoll = () => {
@@ -360,7 +342,6 @@ function startRollLoop(): void {
         }
         ctx.clearRect(0, 0, w, h);
 
-        // Draw subtle vertical octave guide lines at every Carrillo 0 key
         const whiteKeys = keys.filter((k) => !k.isBlack);
         const whiteW = w / Math.max(1, whiteKeys.length);
         const keyXCenter = new Float32Array(keys.length);
@@ -373,7 +354,7 @@ function startRollLoop(): void {
             keyXCenter[i] = wCounter * whiteW;
           }
           if (keys[i].carrilloStep === 0) {
-            ctx.strokeStyle = 'rgba(212, 175, 106, 0.22)';
+            ctx.strokeStyle = 'rgba(212, 175, 106, 0.2)';
             ctx.beginPath();
             ctx.moveTo(keyXCenter[i], 0);
             ctx.lineTo(keyXCenter[i], h);
@@ -381,7 +362,6 @@ function startRollLoop(): void {
           }
         }
 
-        // Draw upcoming notes within a 2.6-second lookahead window!
         const piece = getSelectedPiece();
         const lookahead = 2.6;
         for (const ev of piece.events) {
@@ -393,7 +373,7 @@ function startRollLoop(): void {
           const yBottom = h * (1 - Math.max(0, dtStart) / lookahead);
           const yTop = h * (1 - Math.min(lookahead, dtEnd) / lookahead);
           const barH = Math.max(4, yBottom - yTop);
-          const barW = Math.max(4, (keys[kIdx].isBlack ? whiteW * 0.56 : whiteW * 0.78));
+          const barW = Math.max(4, keys[kIdx].isBlack ? whiteW * 0.56 : whiteW * 0.78);
           const bx = keyXCenter[kIdx] - barW / 2;
 
           const isNow = dtStart <= 0 && dtEnd >= 0;
@@ -409,7 +389,6 @@ function startRollLoop(): void {
   rollRaf = requestAnimationFrame(drawRoll);
 }
 
-// Pianola engine
 function getSelectedPiece(): PianolaPiece {
   return PIANOLA_PIECES.find((p) => p.id === selectedPieceId) ?? PIANOLA_PIECES[0];
 }
@@ -464,9 +443,7 @@ function togglePianola(): void {
         triggeredEvents.add(i);
         if (ev.sustain !== undefined) setSustain(ev.sustain);
         const callout = lang === 'es' ? ev.labelEs : ev.labelEn;
-        if (callout) {
-          currentLiveCallout = callout;
-        }
+        if (callout) currentLiveCallout = callout;
         const kIdx = Math.min(keys.length - 1, Math.max(0, ev.keyIndex));
         triggerNoteOn(kIdx, ev.velocity);
         scheduledOffs.set(kIdx, ev.timeSec + ev.durationSec);
@@ -488,8 +465,9 @@ function updatePianolaUi(): void {
   const playBtn = document.getElementById('btn-pianola-play');
   const fill = document.getElementById('pianola-progress-fill');
   const timeEl = document.getElementById('pianola-time');
-  const calloutEl = document.getElementById('live-callout');
+  const tickerEl = document.getElementById('live-ticker');
   const piece = getSelectedPiece();
+
   if (playBtn) {
     playBtn.textContent = pianolaPlaying ? `⏸ ${t().pause}` : `▶ ${t().play}`;
   }
@@ -500,17 +478,21 @@ function updatePianolaUi(): void {
   if (timeEl) {
     timeEl.textContent = `${pianolaTime.toFixed(1)}s / ${piece.durationSec.toFixed(1)}s`;
   }
-  if (calloutEl) {
+  if (tickerEl) {
     if (currentLiveCallout) {
-      calloutEl.style.display = 'inline-block';
-      calloutEl.textContent = `✦ ${currentLiveCallout}`;
+      tickerEl.classList.add('callout-active');
+      const msg = `✦ ${currentLiveCallout}`;
+      tickerEl.textContent = msg;
+      tickerEl.title = msg;
     } else {
-      calloutEl.style.display = 'none';
+      tickerEl.classList.remove('callout-active');
+      const cue = `🎧 ${lang === 'es' ? piece.listenForEs : piece.listenForEn}`;
+      tickerEl.textContent = cue;
+      tickerEl.title = cue;
     }
   }
 }
 
-// Seamless A/B toggle (18-EDO / microtonal ↔ 12-EDO Standard) WITHOUT stopping Pianola!
 function toggleAbComparison(): void {
   if (currentVariant === 'estandar') {
     applyVariantLive(savedMicrotonalVariant || 'tercios');
@@ -527,6 +509,9 @@ function applyVariantLive(vId: VariantId): void {
   currentAnchor = v.defaultAnchor;
   engine.setParam('edo', v.edo);
   keys = buildKeyboardLayout(currentVariant, currentAnchor, railsbackStretch, lang);
+  if (qwertyBaseIndex > keys.length - 18) {
+    qwertyBaseIndex = Math.max(0, keys.length - 18);
+  }
   harp?.updateLayout(v, keys);
   renderApp();
   updatePianolaUi();
@@ -537,7 +522,6 @@ function applyKeyboardZoom(newZoom: number): void {
   const scrollEl = document.querySelector('.keyboard-scroll') as HTMLElement | null;
   const track = document.getElementById('keyboard-track');
   const rollTrack = document.getElementById('roll-track');
-  const valEl = document.getElementById('zoom-val');
 
   let centerRatio = 0.5;
   if (scrollEl && scrollEl.scrollWidth > 0) {
@@ -548,7 +532,7 @@ function applyKeyboardZoom(newZoom: number): void {
   const widthPct = `${Math.round(keyboardZoom * 100)}%`;
   if (track) track.style.width = widthPct;
   if (rollTrack) rollTrack.style.width = widthPct;
-  if (valEl) valEl.textContent = widthPct;
+  setText('zoom-val', widthPct);
 
   if (scrollEl) {
     requestAnimationFrame(() => {
@@ -765,66 +749,17 @@ function renderApp(): void {
         </div>
       </header>
 
-      <!-- 10-Piece Repertoire Strip + Live Didactic Guide -->
-      <nav class="repertoire-strip" aria-label="${txt.repertoireStripLabel}">
-        <div class="rep-top-row">
-          <div class="rep-pills">
-            ${PIANOLA_PIECES.map(
-              (p) =>
-                `<button type="button" class="rep-pill ${p.id === selectedPieceId ? 'active' : ''}" data-piece-id="${p.id}">
-                  ${lang === 'es' ? p.shortEs : p.shortEn}
-                </button>`
-            ).join('')}
-          </div>
-          <div class="rep-transport">
-            <button type="button" class="btn primary" id="btn-pianola-play">▶ ${txt.play}</button>
-            <button type="button" class="btn" id="btn-pianola-stop" title="${txt.stop}">⏹</button>
-            <button type="button" class="btn ab-btn ${isComparing12 ? 'comparing' : ''}" id="btn-ab-toggle">
-              ${
-                isComparing12
-                  ? lang === 'es'
-                    ? `⇄ Escuchando 12-EDO (Volver a ${compareTargetLabel})`
-                    : `⇄ Hearing 12-EDO (Back to ${compareTargetLabel})`
-                  : lang === 'es'
-                    ? `⇄ Comparar A/B: ${v.edo}-EDO ↔ 12-EDO`
-                    : `⇄ Compare A/B: ${v.edo}-EDO ↔ 12-EDO`
-              }
-            </button>
-          </div>
-        </div>
-        <div class="rep-info-bar">
-          <div class="rep-desc">
-            <strong>${lang === 'es' ? piece.titleEs : piece.titleEn}:</strong>
-            ${lang === 'es' ? piece.descEs : piece.descEn}
-            <div class="rep-listen">🎧 <strong>${txt.listenForPrefix}</strong> ${lang === 'es' ? piece.listenForEs : piece.listenForEn}</div>
-          </div>
-          <span id="live-callout" class="live-callout" style="display:none"></span>
-        </div>
-        <div class="pianola-progress-wrap">
-          <div class="progress-track"><div class="progress-fill" id="pianola-progress-fill"></div></div>
-          <span id="pianola-time">0.0s / ${piece.durationSec.toFixed(1)}s</span>
-          <label style="display:flex;align-items:center;gap:5px;cursor:pointer;font-family:var(--sans)">
-            <span>${txt.speed}</span>
-            <select id="select-tempo" class="select-input" style="width:auto;padding:2px 6px;font-size:0.72rem">
-              ${[0.7, 0.85, 1.0, 1.2, 1.4]
-                .map((sp) => `<option value="${sp}" ${pianolaTempo === sp ? 'selected' : ''}>${sp}×</option>`)
-                .join('')}
-            </select>
-          </label>
-        </div>
-      </nav>
-
-      <!-- Instrument Selector + Live Metamorphosis Inspector + Pitch-Class Circle -->
-      <section class="control-edu-grid">
-        <div class="panel-card">
-          <div class="panel-label">
-            <span>${txt.variantLabel}</span>
-            <label style="cursor:pointer;display:flex;align-items:center;gap:4px;font-weight:400;text-transform:none;letter-spacing:0;color:var(--text-muted)">
-              <input type="checkbox" id="chk-autoswitch" ${autoSwitchPieceVariant ? 'checked' : ''} />
-              ${txt.autoSwitchVariant}
-            </label>
-          </div>
-          <div class="select-row">
+      <!-- 1. Compact Instrument + 10-Piece Repertoire Console -->
+      <section class="top-console-card" aria-label="${txt.repertoireStripLabel}">
+        <div class="instrument-selector-row">
+          <div class="field-group">
+            <div class="panel-label">
+              <span>${txt.variantLabel}</span>
+              <label style="cursor:pointer;display:flex;align-items:center;gap:4px;font-weight:400;text-transform:none;letter-spacing:0;color:var(--text-muted)">
+                <input type="checkbox" id="chk-autoswitch" ${autoSwitchPieceVariant ? 'checked' : ''} />
+                ${txt.autoSwitchVariant}
+              </label>
+            </div>
             <select class="select-input" id="select-variant">
               ${Object.values(VARIANTS)
                 .map(
@@ -835,6 +770,13 @@ function renderApp(): void {
                 )
                 .join('')}
             </select>
+          </div>
+
+          <div class="field-group">
+            <div class="panel-label">
+              <span>${txt.anchorLabel}</span>
+              <span>${v.numKeys} ${lang === 'es' ? 'teclas' : 'keys'} · ${v.octaveSpan.toFixed(2)} oct</span>
+            </div>
             <select class="select-input" id="select-anchor" ${currentVariant === 'estandar' || currentVariant === 'dieciseisavos' || currentVariant === 'tonos-enteros' ? 'disabled' : ''}>
               ${ANCHOR_PRESETS.map(
                 (a) =>
@@ -844,43 +786,53 @@ function renderApp(): void {
               ).join('')}
             </select>
           </div>
-          <div class="variant-meta">
-            <span>${lang === 'es' ? v.subtitleEs : v.subtitleEn}</span>
-            <span>${keys[0].freqHz.toFixed(1)} Hz → ${keys[keys.length - 1].freqHz.toFixed(1)} Hz</span>
+
+          <div class="range-badge" id="range-badge">
+            ${keys[0].freqHz.toFixed(1)} Hz → ${keys[keys.length - 1].freqHz.toFixed(1)} Hz
           </div>
         </div>
 
-        <div class="panel-card">
-          <div class="panel-label">
-            <span>${txt.eduMetamorphTitle}</span>
-            <span>1 tecla = ${v.stepCents.toFixed(1)}¢</span>
-          </div>
-          <div class="metamorph-box" id="metamorph-box"></div>
-          <div class="octave-ruler">
-            <span>Do = 0</span>
-            <span class="mark-12">12 ${lang === 'es' ? 'teclas' : 'keys'} = ${((12 * 1200) / v.edo).toFixed(0)}¢</span>
-            <span class="mark-edo">${v.edo} ${lang === 'es' ? 'teclas = Octava 2:1 (1200¢)' : 'keys = True 2:1 Octave (1200¢)'}</span>
-          </div>
+        <div class="rep-pills">
+          ${PIANOLA_PIECES.map(
+            (p) =>
+              `<button type="button" class="rep-pill ${p.id === selectedPieceId ? 'active' : ''}" data-piece-id="${p.id}">
+                ${lang === 'es' ? p.shortEs : p.shortEn}
+              </button>`
+          ).join('')}
         </div>
 
-        <div class="panel-card" style="justify-content:center">
-          <div class="panel-label">
-            <span>${txt.eduCircleTitle}</span>
-          </div>
-          <div class="circle-wrap">
-            <svg id="pitch-circle-svg" viewBox="0 0 92 92"></svg>
-            <div class="circle-legend">
+        <div class="transport-bar">
+          <div class="rep-transport">
+            <button type="button" class="btn primary" id="btn-pianola-play">▶ ${txt.play}</button>
+            <button type="button" class="btn" id="btn-pianola-stop" title="${txt.stop}">⏹</button>
+            <button type="button" class="btn ab-btn ${isComparing12 ? 'comparing' : ''}" id="btn-ab-toggle">
               ${
-                lang === 'es'
-                  ? 'Geometría en tiempo real de tus notas dentro de la octava.'
-                  : 'Real-time geometry of your active notes inside the octave.'
+                isComparing12
+                  ? lang === 'es'
+                    ? `⇄ 12-EDO (→ ${compareTargetLabel})`
+                    : `⇄ 12-EDO (→ ${compareTargetLabel})`
+                  : `⇄ A/B: ${v.edo}-EDO ↔ 12-EDO`
               }
-            </div>
+            </button>
+          </div>
+
+          <div class="live-ticker" id="live-ticker">
+            🎧 ${lang === 'es' ? piece.listenForEs : piece.listenForEn}
+          </div>
+
+          <div class="pianola-progress-wrap">
+            <div class="progress-track"><div class="progress-fill" id="pianola-progress-fill"></div></div>
+            <span id="pianola-time">0.0s / ${piece.durationSec.toFixed(1)}s</span>
+            <select id="select-tempo" class="select-input" style="width:62px;padding:3px 5px;font-size:0.71rem" title="${txt.speed}">
+              ${[0.7, 0.85, 1.0, 1.2, 1.4]
+                .map((sp) => `<option value="${sp}" ${pianolaTempo === sp ? 'selected' : ''}>${sp}×</option>`)
+                .join('')}
+            </select>
           </div>
         </div>
       </section>
 
-      <!-- Physical Piano Cabinet (Carl Sauter 1958) -->
+      <!-- 2. Physical Piano Cabinet (Carl Sauter 1958) — Zero-Shift Fixed Geometry -->
       <main class="piano-cabinet">
         <div class="harp-stage">
           <canvas id="harp-canvas"></canvas>
@@ -888,21 +840,44 @@ function renderApp(): void {
 
         <div class="fallboard">
           <div class="sauter-decal">
-            <span class="maker">CARL SAUTER · SPAICHINGEN</span>
-            <span class="model">PIANO METAMORFOSEADOR · SONIDO 13 · ${v.year}</span>
+            <span class="maker">CARL SAUTER</span>
+            <span class="model">METAMORFOSEADOR · ${v.year}</span>
           </div>
 
-          <div class="notation-hud" id="notation-hud"></div>
+          <div class="notation-hud" id="notation-hud">
+            <div class="hud-metric">
+              <span class="k" id="hud-k-step">${txt.stepLabel}</span>
+              <span class="v" id="hud-v-step">—</span>
+            </div>
+            <div class="hud-metric">
+              <span class="k" id="hud-k-90">${txt.scale90Label}</span>
+              <span class="v" id="hud-v-90">—</span>
+            </div>
+            <div class="hud-metric">
+              <span class="k">${txt.freqLabel}</span>
+              <span class="v" id="hud-v-freq">— Hz</span>
+            </div>
+            <div class="hud-metric">
+              <span class="k">${txt.nearest12Label}</span>
+              <span class="v" id="hud-v-12">—</span>
+            </div>
+            <div class="hud-metric">
+              <span class="k">${txt.inharmLabel}</span>
+              <span class="v" id="hud-v-b">—</span>
+            </div>
+            <div class="hud-metric">
+              <span class="k">${txt.keyVisualLabel}</span>
+              <span class="v" id="hud-v-key">—</span>
+            </div>
+          </div>
 
           <div class="desk-tools">
-            <label class="btn" style="cursor:pointer">
-              <input type="checkbox" id="chk-nums" ${showCarrilloNumbers ? 'checked' : ''} />
-              ${txt.showCarrilloNums}
-            </label>
-            <label class="btn" style="cursor:pointer">
-              <input type="checkbox" id="chk-qwerty" ${showQwertyHints ? 'checked' : ''} />
-              ${txt.showQwertyHints}
-            </label>
+            <button type="button" class="btn ${showCarrilloNumbers ? 'active' : ''}" id="btn-toggle-nums" title="${txt.showCarrilloNums}">
+              0–${v.edo - 1}
+            </button>
+            <button type="button" class="btn ${showQwertyHints ? 'active' : ''}" id="btn-toggle-qwerty" title="${txt.showQwertyHints}">
+              A–Ñ
+            </button>
             <div class="zoom-controls" title="Zoom teclado">
               <button class="btn" id="btn-zoom-out">−</button>
               <span class="zoom-val" id="zoom-val">${Math.round(keyboardZoom * 100)}%</span>
@@ -937,39 +912,115 @@ function renderApp(): void {
               <span>${txt.pedalSustain}</span>
             </button>
           </div>
-          <div class="keybed-legend">
-            <button class="btn" id="btn-oct-down" style="padding:3px 7px;font-size:0.7rem">Z ◀</button>
-            <span>PC: #${qwertyBaseIndex + 1} (${keys[Math.min(keys.length - 1, qwertyBaseIndex)]?.nearest12Name ?? ''})</span>
-            <button class="btn" id="btn-oct-up" style="padding:3px 7px;font-size:0.7rem">▶ X</button>
+          <div class="keybed-legend right">
+            <button class="btn" id="btn-oct-down" style="padding:3px 7px;font-size:0.69rem">Z ◀</button>
+            <span id="pc-reg-label">PC: #${qwertyBaseIndex + 1} (${keys[Math.min(keys.length - 1, qwertyBaseIndex)]?.nearest12Name ?? ''})</span>
+            <button class="btn" id="btn-oct-up" style="padding:3px 7px;font-size:0.69rem">▶ X</button>
           </div>
         </div>
       </main>
 
-      <!-- Acoustic Calibration Strip with Educational Tips -->
+      <!-- 3. Live Educational Telemetry Deck (Locked Height & Columns) -->
+      <section class="edu-telemetry-grid">
+        <div class="panel-card">
+          <div class="panel-label">
+            <span>${txt.eduMetamorphTitle}</span>
+            <span class="tabular">1 ${lang === 'es' ? 'tecla' : 'key'} = ${v.stepCents.toFixed(2)}¢</span>
+          </div>
+          <div class="metamorph-box" id="metamorph-box">
+            <div class="meta-col">
+              <span class="mk">${txt.eduVisualSpan}</span>
+              <span class="mv" id="meta-v-span">—</span>
+            </div>
+            <div class="meta-col">
+              <span class="mk">${txt.eduNormalPiano}</span>
+              <span class="mv" id="meta-v-12">—</span>
+            </div>
+            <div class="meta-col">
+              <span class="mk" id="meta-k-here">${txt.eduSoundingHere} (${v.edo}-EDO)</span>
+              <span class="mv highlight" id="meta-v-here">—</span>
+            </div>
+          </div>
+          <div class="octave-ruler">
+            <span>Do = 0</span>
+            <span class="mark-12">12 ${lang === 'es' ? 'teclas' : 'keys'} = ${((12 * 1200) / v.edo).toFixed(0)}¢</span>
+            <span class="mark-edo">${v.edo} ${lang === 'es' ? 'teclas = Octava 2:1 (1200¢)' : 'keys = True 2:1 Octave (1200¢)'}</span>
+          </div>
+        </div>
+
+        <div class="panel-card" style="justify-content:space-between">
+          <div class="panel-label">
+            <span>${txt.eduCircleTitle}</span>
+          </div>
+          <div class="circle-wrap">
+            <svg id="pitch-circle-svg" viewBox="0 0 82 82"></svg>
+            <div class="circle-legend">
+              ${
+                lang === 'es'
+                  ? 'Geometría en tiempo real de tus notas y acordes dentro de la octava.'
+                  : 'Real-time geometry of your active notes and chords inside the octave.'
+              }
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 4. Extended Musicological & Acoustic Dossier of the Active Piece -->
+      <article class="piece-dossier-card">
+        <div class="dossier-header">
+          <div class="dossier-title-wrap">
+            <h3>${lang === 'es' ? piece.titleEs : piece.titleEn}</h3>
+            <p>${lang === 'es' ? piece.descEs : piece.descEn}</p>
+          </div>
+          <div class="dossier-badges">
+            <span class="d-badge">${piece.badges.system}</span>
+            <span class="d-badge">${piece.badges.yearRef}</span>
+            <span class="d-badge">${lang === 'es' ? piece.badges.keyIntervalsEs : piece.badges.keyIntervalsEn}</span>
+            <span class="d-badge">${piece.badges.carrilloFormula}</span>
+          </div>
+        </div>
+
+        <div class="dossier-columns">
+          <div class="dossier-col">
+            <h4>${lang === 'es' ? '1. Contexto Histórico y Repertorio' : '1. Historical & Repertoire Context'}</h4>
+            <p>${lang === 'es' ? piece.historicalContextEs : piece.historicalContextEn}</p>
+          </div>
+          <div class="dossier-col">
+            <h4>${lang === 'es' ? '2. Análisis Interválico y Acústico' : '2. Intervallic & Acoustic Analysis'}</h4>
+            <p>${lang === 'es' ? piece.acousticAnalysisEs : piece.acousticAnalysisEn}</p>
+          </div>
+          <div class="dossier-col">
+            <h4>${lang === 'es' ? '3. Experimento de Escucha Activa' : '3. Active Listening Experiment'}</h4>
+            <p>${lang === 'es' ? piece.listeningExperimentEs : piece.listeningExperimentEn}</p>
+          </div>
+        </div>
+      </article>
+
+      <!-- 5. Acoustic Calibration Strip -->
       <section class="panel-card">
         <div class="panel-label">
           <span>${txt.acousticTitle}</span>
-          <span>Web AudioWorklet · 28 voces × 10 modos</span>
+          <span>AudioWorklet · 28 voces × 10 modos</span>
         </div>
         <div class="calibration-grid">
           <div class="slider-item">
-            <div class="slider-head"><span>${txt.hammer}</span><span class="val" id="val-hammer">55%</span></div>
-            <input type="range" id="sl-hammer" min="0.1" max="1" step="0.01" value="0.55" />
+            <div class="slider-head"><span>${txt.hammer}</span><span class="val" id="val-hammer">${Math.round(uiParams.hammerHardness * 100)}%</span></div>
+            <input type="range" id="sl-hammer" min="0.1" max="1" step="0.01" value="${uiParams.hammerHardness}" />
             <span class="slider-tip">${txt.hammerTip}</span>
           </div>
           <div class="slider-item">
-            <div class="slider-head"><span>${txt.unison}</span><span class="val" id="val-unison">35%</span></div>
-            <input type="range" id="sl-unison" min="0" max="1" step="0.01" value="0.35" />
+            <div class="slider-head"><span>${txt.unison}</span><span class="val" id="val-unison">${Math.round(uiParams.unisonWidth * 100)}%</span></div>
+            <input type="range" id="sl-unison" min="0" max="1" step="0.01" value="${uiParams.unisonWidth}" />
             <span class="slider-tip">${txt.unisonTip}</span>
           </div>
           <div class="slider-item">
-            <div class="slider-head"><span>${txt.sympathetic}</span><span class="val" id="val-symp">55%</span></div>
-            <input type="range" id="sl-symp" min="0" max="1" step="0.01" value="0.55" />
+            <div class="slider-head"><span>${txt.sympathetic}</span><span class="val" id="val-symp">${Math.round(uiParams.sympathetic * 100)}%</span></div>
+            <input type="range" id="sl-symp" min="0" max="1" step="0.01" value="${uiParams.sympathetic}" />
             <span class="slider-tip">${txt.sympatheticTip}</span>
           </div>
           <div class="slider-item">
-            <div class="slider-head"><span>${txt.inharmonicity}</span><span class="val" id="val-inharm">1.0×</span></div>
-            <input type="range" id="sl-inharm" min="0" max="2" step="0.05" value="1.0" />
+            <div class="slider-head"><span>${txt.inharmonicity}</span><span class="val" id="val-inharm">${uiParams.inharmonicityScale.toFixed(1)}×</span></div>
+            <input type="range" id="sl-inharm" min="0" max="2" step="0.05" value="${uiParams.inharmonicityScale}" />
             <span class="slider-tip">${txt.inharmonicityTip}</span>
           </div>
           <div class="slider-item">
@@ -978,19 +1029,19 @@ function renderApp(): void {
             <span class="slider-tip">${txt.railsbackTip}</span>
           </div>
           <div class="slider-item">
-            <div class="slider-head"><span>${txt.soundboard}</span><span class="val" id="val-sb">42%</span></div>
-            <input type="range" id="sl-sb" min="0" max="1" step="0.01" value="0.42" />
+            <div class="slider-head"><span>${txt.soundboard}</span><span class="val" id="val-sb">${Math.round(uiParams.soundboardMix * 100)}%</span></div>
+            <input type="range" id="sl-sb" min="0" max="1" step="0.01" value="${uiParams.soundboardMix}" />
             <span class="slider-tip">${txt.soundboardTip}</span>
           </div>
           <div class="slider-item">
-            <div class="slider-head"><span>${txt.volume}</span><span class="val" id="val-vol">72%</span></div>
-            <input type="range" id="sl-vol" min="0" max="1" step="0.01" value="0.72" />
-            <span class="slider-tip">Salida estéreo con limitador suave</span>
+            <div class="slider-head"><span>${txt.volume}</span><span class="val" id="val-vol">${Math.round(uiParams.masterGain * 100)}%</span></div>
+            <input type="range" id="sl-vol" min="0" max="1" step="0.01" value="${uiParams.masterGain}" />
+            <span class="slider-tip">${lang === 'es' ? 'Salida estéreo con limitador suave' : 'Stereo output with soft limiter'}</span>
           </div>
         </div>
       </section>
 
-      <!-- Footer Credits (Omnifón pattern + @extasisrecords Bandcamp) -->
+      <!-- 6. Footer Credits -->
       <footer class="footer-credits">
         <div>${txt.footerShortcuts}</div>
         <div>
@@ -1085,7 +1136,8 @@ function renderApp(): void {
 
 function shiftQwertyRegister(delta: number): void {
   qwertyBaseIndex = Math.max(0, Math.min(Math.max(0, keys.length - 18), qwertyBaseIndex + delta));
-  renderApp();
+  setText('pc-reg-label', `PC: #${qwertyBaseIndex + 1} (${keys[Math.min(keys.length - 1, qwertyBaseIndex)]?.nearest12Name ?? ''})`);
+  rebuildKeyboardDOM();
 }
 
 function bindEvents(): void {
@@ -1127,19 +1179,22 @@ function bindEvents(): void {
     currentAnchor = (e.target as HTMLSelectElement).value as AnchorId;
     keys = buildKeyboardLayout(currentVariant, currentAnchor, railsbackStretch, lang);
     harp?.updateLayout(VARIANTS[currentVariant], keys);
+    setText('range-badge', `${keys[0].freqHz.toFixed(1)} Hz → ${keys[keys.length - 1].freqHz.toFixed(1)} Hz`);
     rebuildKeyboardDOM();
     updateNotationHud();
     updateMetamorphosisBox();
     updatePitchCircle();
   });
 
-  document.getElementById('chk-nums')?.addEventListener('change', (e) => {
-    showCarrilloNumbers = (e.target as HTMLInputElement).checked;
+  document.getElementById('btn-toggle-nums')?.addEventListener('click', (e) => {
+    showCarrilloNumbers = !showCarrilloNumbers;
+    (e.currentTarget as HTMLElement).classList.toggle('active', showCarrilloNumbers);
     rebuildKeyboardDOM();
   });
 
-  document.getElementById('chk-qwerty')?.addEventListener('change', (e) => {
-    showQwertyHints = (e.target as HTMLInputElement).checked;
+  document.getElementById('btn-toggle-qwerty')?.addEventListener('click', (e) => {
+    showQwertyHints = !showQwertyHints;
+    (e.currentTarget as HTMLElement).classList.toggle('active', showQwertyHints);
     rebuildKeyboardDOM();
   });
 
@@ -1166,18 +1221,15 @@ function bindEvents(): void {
     renderApp();
   });
 
-  // Pedals & Register Shift
   document.getElementById('pedal-sustain')?.addEventListener('click', () => setSustain(!sustainDown));
   document.getElementById('pedal-unacorda')?.addEventListener('click', () => setUnaCorda(!unaCordaDown));
   document.getElementById('btn-oct-down')?.addEventListener('click', () => shiftQwertyRegister(-12));
   document.getElementById('btn-oct-up')?.addEventListener('click', () => shiftQwertyRegister(12));
 
-  // Keyboard Zoom
   document.getElementById('btn-zoom-out')?.addEventListener('click', () => applyKeyboardZoom(keyboardZoom - 0.2));
   document.getElementById('btn-zoom-in')?.addEventListener('click', () => applyKeyboardZoom(keyboardZoom + 0.2));
   document.getElementById('btn-zoom-fit')?.addEventListener('click', () => applyKeyboardZoom(1.0));
 
-  // Modals
   const bindModal = (openId: string, modalId: string, closeId: string) => {
     const m = document.getElementById(modalId);
     document.getElementById(openId)?.addEventListener('click', () => m?.classList.remove('hidden'));
@@ -1200,21 +1252,51 @@ function bindEvents(): void {
   document.getElementById('lab-sw-18')?.addEventListener('click', () => applyVariantLive('tercios'));
   document.getElementById('lab-sw-12')?.addEventListener('click', () => applyVariantLive('estandar'));
 
-  // Sliders
   const bindSlider = (id: string, valId: string, cb: (v: number) => void, fmt: (v: number) => string) => {
     const el = document.getElementById(id) as HTMLInputElement | null;
-    const out = document.getElementById(valId);
     el?.addEventListener('input', () => {
       const v = Number(el.value);
-      if (out) out.textContent = fmt(v);
+      setText(valId, fmt(v));
       cb(v);
     });
   };
 
-  bindSlider('sl-hammer', 'val-hammer', (v) => engine.setParam('hammerHardness', v), (v) => `${Math.round(v * 100)}%`);
-  bindSlider('sl-unison', 'val-unison', (v) => engine.setParam('unisonWidth', v), (v) => `${Math.round(v * 100)}%`);
-  bindSlider('sl-symp', 'val-symp', (v) => engine.setParam('sympathetic', v), (v) => `${Math.round(v * 100)}%`);
-  bindSlider('sl-inharm', 'val-inharm', (v) => engine.setParam('inharmonicityScale', v), (v) => `${v.toFixed(1)}×`);
+  bindSlider(
+    'sl-hammer',
+    'val-hammer',
+    (v) => {
+      uiParams.hammerHardness = v;
+      engine.setParam('hammerHardness', v);
+    },
+    (v) => `${Math.round(v * 100)}%`
+  );
+  bindSlider(
+    'sl-unison',
+    'val-unison',
+    (v) => {
+      uiParams.unisonWidth = v;
+      engine.setParam('unisonWidth', v);
+    },
+    (v) => `${Math.round(v * 100)}%`
+  );
+  bindSlider(
+    'sl-symp',
+    'val-symp',
+    (v) => {
+      uiParams.sympathetic = v;
+      engine.setParam('sympathetic', v);
+    },
+    (v) => `${Math.round(v * 100)}%`
+  );
+  bindSlider(
+    'sl-inharm',
+    'val-inharm',
+    (v) => {
+      uiParams.inharmonicityScale = v;
+      engine.setParam('inharmonicityScale', v);
+    },
+    (v) => `${v.toFixed(1)}×`
+  );
   bindSlider(
     'sl-railsback',
     'val-railsback',
@@ -1224,11 +1306,26 @@ function bindEvents(): void {
     },
     (v) => `${v.toFixed(1)}×`
   );
-  bindSlider('sl-sb', 'val-sb', (v) => engine.setParam('soundboardMix', v), (v) => `${Math.round(v * 100)}%`);
-  bindSlider('sl-vol', 'val-vol', (v) => engine.setParam('masterGain', v), (v) => `${Math.round(v * 100)}%`);
+  bindSlider(
+    'sl-sb',
+    'val-sb',
+    (v) => {
+      uiParams.soundboardMix = v;
+      engine.setParam('soundboardMix', v);
+    },
+    (v) => `${Math.round(v * 100)}%`
+  );
+  bindSlider(
+    'sl-vol',
+    'val-vol',
+    (v) => {
+      uiParams.masterGain = v;
+      engine.setParam('masterGain', v);
+    },
+    (v) => `${Math.round(v * 100)}%`
+  );
 }
 
-// Global keyboard shortcuts (QWERTY piano + Z/X shift + Space Sustain + Shift Una Corda)
 window.addEventListener('keydown', (e) => {
   if (e.repeat) return;
   const tag = (e.target as HTMLElement)?.tagName;

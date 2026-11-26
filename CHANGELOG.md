@@ -2,6 +2,16 @@
 
 Todos los cambios notables de este proyecto se documentan en este archivo.
 
+## [1.1.0] — 2026-11-26
+
+### Rediseño de consola centrada de geometría fija y fichas musicológicas extendidas
+- **Consola centrada de estudio (`max-width: 1100px`):** Proporciones contenidas con márgenes laterales simétricos y jerarquía visual donde el mueble Carl Sauter 1958 ocupa el plano protagonista inmediato.
+- **Cero saltos de layout (`0 px jitter`):**
+  - El visor del atril (`#notation-hud`), el inspector de metamorfosis (`#metamorph-box`), el ticker didáctico en vivo (`#live-ticker`) y los botones de transporte utilizan rejillas fijas y tipografía tabular (`tabular-nums`), actualizando únicamente nodos de texto en sitio sin alterar el ancho ni la altura de ningún módulo.
+  - Prevención de condiciones de carrera concurrentes durante la carga asíncrona inicial de `AudioWorklet`.
+- **Fichas musicológicas y acústicas extendidas para las 10 obras (`.piece-dossier-card`):**
+  - Cada obra incorpora etiquetas técnicas rápidas y tres columnas analíticas bilingües (`ES` / `EN`): *1. Contexto Histórico y Repertorio*, *2. Análisis Interválico y Acústico* y *3. Experimento de Escucha Activa*.
+
 ## [1.0.0] — 2026-11-26
 
 Primera versión pública oficial de **Sonido 13 · Piano Metamorfoseador Virtual**, reconstrucción interactiva en navegador del piano de tercios de tono (`18-EDO`) concebido por **Julián Carrillo** y fabricado por **Carl Sauter** en 1958.
