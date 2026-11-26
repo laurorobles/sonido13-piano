@@ -22,6 +22,7 @@ let currentAnchor: AnchorId = 'c4-40';
 let railsbackStretch = 1.0;
 let showCarrilloNumbers = true;
 let showQwertyHints = true;
+let showPieceDossier = true;
 let autoSwitchPieceVariant = true;
 let keyboardZoom = 1.0;
 let qwertyBaseIndex = 39; // C4 on 88-key board; Z/X shifts by ±12 keys
@@ -814,6 +815,17 @@ function renderApp(): void {
                   : `⇄ A/B: ${v.edo}-EDO ↔ 12-EDO`
               }
             </button>
+            <button type="button" class="btn ${showPieceDossier ? 'active' : ''}" id="btn-toggle-dossier" style="width:112px">
+              ${
+                showPieceDossier
+                  ? lang === 'es'
+                    ? '▴ Ocultar info'
+                    : '▴ Hide info'
+                  : lang === 'es'
+                    ? '▾ Info obra'
+                    : '▾ Piece info'
+              }
+            </button>
           </div>
 
           <div class="live-ticker" id="live-ticker">
@@ -832,7 +844,7 @@ function renderApp(): void {
         </div>
 
         <!-- Piece Musicological Dossier right beneath the piece selector & transport! -->
-        <div class="piece-dossier-inline">
+        <div class="piece-dossier-inline ${showPieceDossier ? '' : 'collapsed'}" id="piece-dossier-panel">
           <div class="dossier-header">
             <div class="dossier-title-wrap">
               <h3 title="${lang === 'es' ? piece.titleEs : piece.titleEn}">${lang === 'es' ? piece.titleEs : piece.titleEn}</h3>
@@ -1165,6 +1177,21 @@ function bindEvents(): void {
   });
 
   document.getElementById('btn-ab-toggle')?.addEventListener('click', () => toggleAbComparison());
+
+  document.getElementById('btn-toggle-dossier')?.addEventListener('click', (e) => {
+    showPieceDossier = !showPieceDossier;
+    const panel = document.getElementById('piece-dossier-panel');
+    const btn = e.currentTarget as HTMLElement;
+    panel?.classList.toggle('collapsed', !showPieceDossier);
+    btn.classList.toggle('active', showPieceDossier);
+    btn.textContent = showPieceDossier
+      ? lang === 'es'
+        ? '▴ Ocultar info'
+        : '▴ Hide info'
+      : lang === 'es'
+        ? '▾ Info obra'
+        : '▾ Piece info';
+  });
 
   document.getElementById('select-tempo')?.addEventListener('change', (e) => {
     pianolaTempo = Number((e.target as HTMLSelectElement).value) || 1.0;

@@ -893,6 +893,10 @@ body {
   gap: 8px;
 }
 
+.piece-dossier-inline.collapsed {
+  display: none;
+}
+
 .dossier-header {
   display: grid;
   grid-template-columns: minmax(0, 1fr) auto;
