@@ -1,0 +1,474 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Anexo de Investigación Documental · Piano de Tercios de Tono (Julián Carrillo)</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --plate: #f4f0e6;
+        --plate-2: #e9e2d2;
+        --ink: #1a1815;
+        --ink-soft: #4e4940;
+        --gold: #c89f54;
+        --gold-bright: #f2d28b;
+        --accent: #7a4b2a;
+        --crimson: #8f1d24;
+        --serif: 'Cormorant Garamond', Georgia, serif;
+        --sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+        --mono: 'JetBrains Mono', Menlo, Consolas, monospace;
+      }
+      * {
+        box-sizing: border-box;
+      }
+      html {
+        scroll-behavior: smooth;
+      }
+      body {
+        margin: 0;
+        font-family: var(--sans);
+        color: var(--ink);
+        background:
+          radial-gradient(ellipse at 50% -10%, rgba(212, 175, 106, 0.14), transparent 60%),
+          linear-gradient(180deg, #1d1a16 0%, #0e0d0c 100%);
+        min-height: 100vh;
+        line-height: 1.72;
+      }
+      .topbar {
+        position: sticky;
+        top: 0;
+        z-index: 20;
+        background: rgba(18, 16, 14, 0.96);
+        backdrop-filter: blur(8px);
+        border-bottom: 1px solid rgba(212, 175, 106, 0.28);
+        padding: 12px 22px;
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        color: #f3ede2;
+      }
+      .brand {
+        display: flex;
+        align-items: baseline;
+        gap: 12px;
+        flex-wrap: wrap;
+      }
+      .brand h1 {
+        margin: 0;
+        font-family: var(--serif);
+        font-size: 20px;
+        letter-spacing: 0.22em;
+        font-weight: 700;
+        color: var(--gold-bright);
+      }
+      .brand span {
+        font-size: 11px;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: #aba08f;
+      }
+      .bar-actions {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+      .bar-btn {
+        background: #231f1b;
+        color: #f3ede2;
+        border: 1px solid rgba(212, 175, 106, 0.35);
+        border-radius: 6px;
+        padding: 7px 13px;
+        font-size: 11.5px;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+        text-decoration: none;
+        cursor: pointer;
+        font-family: var(--sans);
+        transition: all 0.15s ease;
+      }
+      .bar-btn:hover {
+        background: var(--gold);
+        color: #14110d;
+        border-color: var(--gold-bright);
+      }
+      .layout {
+        max-width: 1240px;
+        margin: 26px auto 56px;
+        padding: 0 18px;
+        display: grid;
+        grid-template-columns: 270px minmax(0, 1fr);
+        gap: 24px;
+        align-items: start;
+      }
+      @media (max-width: 920px) {
+        .layout {
+          grid-template-columns: 1fr;
+        }
+        .toc {
+          position: static !important;
+          max-height: none !important;
+        }
+      }
+      .toc {
+        position: sticky;
+        top: 76px;
+        max-height: calc(100vh - 96px);
+        overflow-y: auto;
+        background: #1a1714;
+        border: 1px solid rgba(212, 175, 106, 0.24);
+        border-radius: 10px;
+        padding: 16px 18px;
+        color: #dfd7c8;
+      }
+      .toc-title {
+        margin: 0 0 10px;
+        font-size: 10.5px;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+        color: var(--gold);
+        border-bottom: 1px solid rgba(212, 175, 106, 0.2);
+        padding-bottom: 8px;
+      }
+      .toc a {
+        display: block;
+        color: #d6cebe;
+        text-decoration: none;
+        font-size: 12.5px;
+        line-height: 1.45;
+        padding: 5px 0;
+        transition: color 0.15s ease;
+      }
+      .toc a:hover {
+        color: var(--gold-bright);
+      }
+      .toc a.sub {
+        padding-left: 12px;
+        font-size: 11.5px;
+        color: #a69c8b;
+      }
+      .paper {
+        background: var(--plate);
+        border-radius: 10px;
+        padding: 40px 48px 54px;
+        box-shadow: 0 24px 60px rgba(0, 0, 0, 0.55);
+        border: 1px solid rgba(212, 175, 106, 0.35);
+      }
+      @media (max-width: 680px) {
+        .paper {
+          padding: 24px 20px 36px;
+        }
+      }
+      .paper-kicker {
+        font-size: 11px;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+        color: var(--accent);
+        font-weight: 600;
+        margin-bottom: 8px;
+      }
+      .paper h1 {
+        font-family: var(--serif);
+        font-size: 2.35rem;
+        line-height: 1.15;
+        color: #161310;
+        margin: 0 0 18px;
+      }
+      .paper h2 {
+        font-family: var(--serif);
+        font-size: 1.7rem;
+        color: #211a12;
+        margin: 34px 0 12px;
+        padding-bottom: 6px;
+        border-bottom: 1px solid rgba(122, 75, 42, 0.28);
+      }
+      .paper h3 {
+        font-family: var(--serif);
+        font-size: 1.32rem;
+        color: var(--accent);
+        margin: 24px 0 8px;
+      }
+      .paper p {
+        margin: 0 0 14px;
+        font-size: 0.96rem;
+        color: var(--ink);
+      }
+      .paper ul,
+      .paper ol {
+        margin: 0 0 16px;
+        padding-left: 22px;
+      }
+      .paper li {
+        margin-bottom: 8px;
+        font-size: 0.95rem;
+      }
+      .callout {
+        background: var(--plate-2);
+        border-left: 4px solid var(--crimson);
+        padding: 14px 18px;
+        border-radius: 0 8px 8px 0;
+        margin: 18px 0 22px;
+        font-size: 0.92rem;
+      }
+      .formula-box {
+        background: #ebe4d4;
+        border: 1px solid rgba(122, 75, 42, 0.28);
+        border-radius: 8px;
+        padding: 12px 18px;
+        margin: 14px 0 18px;
+        font-family: var(--mono);
+        font-size: 0.88rem;
+        color: #2a1d12;
+        overflow-x: auto;
+      }
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 18px 0 24px;
+        font-size: 0.86rem;
+        background: #faf7f0;
+        border: 1px solid rgba(122, 75, 42, 0.28);
+      }
+      th,
+      td {
+        padding: 10px 12px;
+        text-align: left;
+        border-bottom: 1px solid rgba(122, 75, 42, 0.18);
+        vertical-align: top;
+      }
+      th {
+        background: #e6decb;
+        color: #241b12;
+        font-weight: 600;
+      }
+      .refs {
+        font-size: 0.84rem;
+        color: var(--ink-soft);
+      }
+      .refs a {
+        color: var(--accent);
+        word-break: break-all;
+      }
+      @media print {
+        body {
+          background: #fff;
+        }
+        .topbar,
+        .toc {
+          display: none;
+        }
+        .layout {
+          display: block;
+          margin: 0;
+          padding: 0;
+        }
+        .paper {
+          box-shadow: none;
+          border: none;
+          padding: 0;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header class="topbar">
+      <div class="brand">
+        <h1>SONIDO 13</h1>
+        <span>Anexo de Investigación Documental · Piano de Tercios de Tono (Julián Carrillo)</span>
+      </div>
+      <div class="bar-actions">
+        <a href="./" class="bar-btn">← Volver al instrumento</a>
+        <button class="bar-btn" onclick="window.print()">Imprimir / PDF</button>
+      </div>
+    </header>
+
+    <div class="layout">
+      <nav class="toc">
+        <p class="toc-title">Contenido del Anexo</p>
+        <a href="#resumen">Resumen y fundamentos</a>
+        <a href="#instrumento">1. El instrumento original (Sauter 1958)</a>
+        <a href="#anclajes" class="sub">Hipótesis de extensión en 88 teclas</a>
+        <a href="#acustica">2. Acústica y psicoacústica del 18-EDO</a>
+        <a href="#sintesis">3. Comparativa de técnicas de síntesis</a>
+        <a href="#modal" class="sub">Modelado físico modal e híbrido</a>
+        <a href="#fm" class="sub">Síntesis FM</a>
+        <a href="#sampling" class="sub">Muestreo (Sampling)</a>
+        <a href="#neuronal" class="sub">DDSP-Piano y Piano-SSM</a>
+        <a href="#arquitectura">4. Arquitectura recomendada</a>
+        <a href="#hoja-de-ruta">5. Hoja de ruta práctica (3 caminos)</a>
+        <a href="#fuentes">6. Fuentes citadas</a>
+      </nav>
+
+      <article class="paper">
+        <div class="paper-kicker">Investigación Musicológica y Acústica · Sonido 13</div>
+        <h1 id="resumen">
+          Recreación virtual del piano de tercios de tono de Julián Carrillo: fundamentos acústicos y arquitectura de síntesis
+        </h1>
+
+        <p>
+          Para recrear de manera fiel y expresiva el <strong>piano de tercios de tono (18-EDO)</strong> de Julián Carrillo en formato virtual, la
+          <strong>síntesis por modelado físico híbrido —combinando síntesis modal de cuerdas, un excitador no lineal de macillo y una tabla armónica mediante red de retardos realimentados (FDN) o respuesta modal—</strong>
+          se perfila como la arquitectura técnica más sólida. Aunque a primera vista pudiera parecer suficiente tomar una librería de muestras de piano convencional y desafinar cada tecla a intervalos de 66,67 cents, el instrumento físico de Carrillo —un piano de media cola de 88 teclas fabricado por la casa alemana <strong>Carl Sauter en 1958</strong>— obedece a una física acústica muy distinta a la de un piano temperado en 12 tonos. Comprimir 88 teclas en apenas 4,83 octavas transforma el perfil de inarmonicidad de las cuerdas, suprime las principales vías de resonancia simpática por quintas y cuartas, y desplaza los batimientos entre teclas contiguas hacia la franja de máxima aspereza psicoacústica del oído humano.
+        </p>
+
+        <p>
+          Las demás familias de síntesis presentan compromisos importantes frente a este objetivo. La <strong>síntesis FM</strong> implementa cualquier división microtonal con un consumo mínimo de CPU, pero no reproduce de forma natural la compresión no lineal del fieltro del macillo, el decaimiento en dos etapas de coros de tres cuerdas ni la radiación de una tabla de madera de pícea. El <strong>muestreo (sampling)</strong> exigiría grabar directamente el ejemplar histórico conservado en San Luis Potosí —una empresa compleja por conservación y estabilidad de afinación—, mientras que desafinar muestras de un piano estándar de 12 tonos introduce artefactos acústicos ajenos al instrumento. Por su parte, los modelos neuronales y diferenciables recientes como <strong>DDSP-Piano</strong> o <strong>Piano-SSM</strong> constituyen una vía de investigación prometedora, pero requieren grandes corpus de audio anotado con MIDI (~65 horas), inexistentes para un instrumento en 18-EDO.
+        </p>
+
+        <div class="callout">
+          <strong>Salvedad organológica clave:</strong> Si bien las fuentes académicas confirman que el modelo de 1958 de Carl Sauter era un piano de media cola (<em>baby grand</em>) de 88 teclas afinado en tercios de tono (18 divisiones iguales por octava), la documentación abierta disponible no precisa las frecuencias límite exactas (la nota más grave y la más aguda) ni el tiro detallado de cuerdas de esa unidad; los planos originales de los pianos Carrillo se resguardan en el <strong>Centro Julián Carrillo de San Luis Potosí</strong> y en estudios aún inéditos. En consecuencia, una recreación virtual bien diseñada incluye una capa parametrizable para elegir el punto de anclaje tonal (por ejemplo, Do central en la tecla 40 o La4 en la tecla 49) y recalibrar los parámetros físicos al registro resultante.
+        </div>
+
+        <h2 id="instrumento">1. El instrumento original: historia, morfología y lógica metamorfoseadora</h2>
+        <p>
+          El piano de tercios de tono ocupa un lugar central en la materialización del <em>Sonido 13</em> de <strong>Julián Carrillo (1875–1965)</strong>. Tras registrar la patente de sus pianos microtonales en 1940, Carrillo impulsó la construcción de un primer prototipo experimental de tercios de tono en México antes de encargar la serie definitiva en Alemania; las reseñas historiográficas secundarias sitúan ese antecedente entre 1947, 1949 y hacia 1953 bajo la factura de <strong>Federico Buschmann</strong>, constructor del que se conservan planos de una versión vertical (<em>upright</em>).
+        </p>
+        <p>
+          La culminación organológica ocurrió en <strong>1958</strong>, cuando la firma alemana <strong>Carl Sauter</strong> (Spaichingen) fabricó la serie de <strong>15 «pianos metamorfoseadores»</strong>, presentados en la Expo 58 de Bruselas, expuestos en la Ciudad de México en 1959 y conservados hoy en el Centro Julián Carrillo de San Luis Potosí. Para el diseño virtual resulta decisivo un rasgo morfológico documentado en la investigación musicológica reciente: mientras casi todos los demás instrumentos de la colección adoptaron muebles verticales convencionales (con excepciones notorias como el piano de tonos enteros de 43 teclas o el de dieciseisavos de tono de 96 teclas, cuya extensión audible cubría una sola octava), <strong>el piano de tercios de tono de Sauter adoptó la caja de un piano de media cola (<em>baby grand</em>) visualmente idéntico a uno convencional de 88 teclas</strong>.
+        </p>
+        <p>
+          Como referencia orientativa de la escuela constructiva compacta de Sauter (modelos de 160 a 185 cm), los catálogos del fabricante destacan tablas armónicas de pícea alpina o bávara maciza, arpa de hierro fundido, clavijero de haya, maquinaria Renner y cuerdas Röslau; aunque estos datos describen líneas posteriores del constructor y no planos verificados del encordado a medida de 1958, ofrecen un marco tímbrico coherente para modelar un media cola alemán de cámara.
+        </p>
+        <p>
+          En línea con sus <em>Leyes de metamorfosis musicales</em> (1949), Carrillo conservó intencionadamente el <strong>teclado tradicional de teclas blancas y negras</strong> para que un pianista clásico pudiera ejecutar digitaciones habituales y obtener una transformación sistemática de todos los intervalos. En el piano de tercios de tono, abarcar físicamente una octava tradicional del teclado (12 intervalos de tecla) produce dos tercios de octava sonora (800 cents, equivalente a una sexta menor o quinta aumentada), mientras que una octava real (2:1) exige recorrer <strong>18 teclas</strong>. Para su lectura, Carrillo ideó una notación numérica donde Do es siempre <code>0</code> y los tercios de tono pueden escribirse en progresión directa de <code>0</code> a <code>17</code> por octava o como múltiplos de cinco (<code>0, 5, 10, 15...</code>) dentro de su sistema unificado de 90 divisiones por octava.
+        </p>
+        <p>
+          Para calibrar de oído el carácter tímbrico y la articulación de la recreación, la referencia fonográfica principal documentada es el <strong><em>Concertino en tercios de tono</em></strong> para piano «Metamorfoseador Carrillo» y orquesta (movimientos <em>Lento</em>, <em>Allegro</em> y <em>Vivace</em>), grabado en la serie francesa de <strong>Philips</strong> por el solista <strong>Bernard de Flavigny</strong> junto a la Orchestre de l'Association des Concerts Lamoureux bajo la batuta del propio compositor.
+        </p>
+
+        <h3 id="anclajes">Hipótesis matemáticas de extensión en 88 teclas</h3>
+        <p>
+          Un teclado estándar de 88 teclas contiene exactamente 87 intervalos consecutivos. Como cada paso de 18-EDO equivale a 66,67 cents (razón de frecuencia <code>2^(1/18) ≈ 1,039259</code>), la extensión geométrica total del piano queda fijada en <strong>4 octavas y 15 tercios de tono (4,8333 octavas)</strong>. La tabla siguiente resume los cinco anclajes implementados como <em>presets</em> seleccionables en este instrumento virtual:
+        </p>
+
+        <table>
+          <thead>
+            <tr>
+              <th>Configuración de anclaje</th>
+              <th>Tecla de referencia</th>
+              <th>Tecla 1 (más grave)</th>
+              <th>Tecla 88 (más aguda)</th>
+              <th>Implicación pianística y acústica</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Anclaje Do central</strong></td>
+              <td>Tecla 40 = Do4 (261,63 Hz)</td>
+              <td>58,27 Hz (Si♭1 / MIDI 34)</td>
+              <td>1661,22 Hz (Sol♯6 / MIDI 92)</td>
+              <td>Equilibrio óptimo en el registro central; conserva la referencia didáctica de Do = 0 en el centro del teclado.</td>
+            </tr>
+            <tr>
+              <td><strong>Anclaje La de concierto</strong></td>
+              <td>Tecla 49 = La4 (440,00 Hz)</td>
+              <td>69,30 Hz (Do♯2 / MIDI 37)</td>
+              <td>1975,53 Hz (Si6 / MIDI 95)</td>
+              <td>Máxima comodidad para concertar con orquesta tradicional (como en el <em>Concertino</em>), con registro superior más brillante.</td>
+            </tr>
+            <tr>
+              <td><strong>Inicio en La1</strong></td>
+              <td>Tecla 1 = La1 (55,00 Hz)</td>
+              <td>55,00 Hz (La1 / MIDI 33)</td>
+              <td>1567,98 Hz (Sol6 / MIDI 91)</td>
+              <td>Mantiene la primera tecla en La, exactamente una octava por encima del La0 de un piano estándar.</td>
+            </tr>
+            <tr>
+              <td><strong>Inicio en Do2</strong></td>
+              <td>Tecla 1 = Do2 (65,41 Hz)</td>
+              <td>65,41 Hz (Do2 / MIDI 36)</td>
+              <td>1864,66 Hz (La♯6 / MIDI 94)</td>
+              <td>Alinea el extremo grave con la convención de Do = 0 del sistema numérico de Carrillo.</td>
+            </tr>
+            <tr>
+              <td><strong>Inicio en La0 estándar</strong></td>
+              <td>Tecla 1 = La0 (27,50 Hz)</td>
+              <td>27,50 Hz (La0 / MIDI 21)</td>
+              <td>783,99 Hz (Sol5 / MIDI 79)</td>
+              <td>Hipótesis extrema: conserva el grave profundo pero recorta el registro agudo por encima de Sol5; poco funcional para concierto solista.</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <h2 id="acustica">2. Acústica y psicoacústica del 18-EDO: por qué no basta con desafinar un piano estándar</h2>
+        <p>
+          La estructura interválica del 18-EDO encierra una paradoja esencial para el diseño sonoro. Como 18 es divisible por 6 y por 3 pero no por 12, el piano de Carrillo conserva íntegra la escala de tonos enteros —la segunda mayor de 3 pasos mide exactamente 200 cents y la tercera mayor de 6 pasos mide 400 cents, idénticas al 12-EDO—, pero <strong>prescinde del semitono temperado y desarticula la quinta justa (3:2) y la cuarta justa (4:3)</strong>. Sus aproximaciones más próximas (11 pasos = 733,33 cents y 7 pasos = 466,67 cents) se desvían en ±31,38 cents de las razones puras. En cambio, el sistema abre el acceso a sonoridades ajenas al piano estándar, mejorando drásticamente la <strong>tercera neutra (11:9)</strong> (error de solo −14,07 cents frente a −47,41 cents en 12-EDO) y la <strong>undécima armónica (11:8)</strong> (−17,98 cents frente a +48,68 cents).
+        </p>
+        <p>
+          Esta ausencia de quintas y cuartas transforma el comportamiento colectivo del arpa al pisar el pedal de resonancia. Según el modelado analítico de coincidencias parciales (parciales <em>n</em> = 2..6 de Do4 frente a <em>m</em> = 1..3 de cuerdas libres dentro de ±15 cents con <em>B</em> = 0,00035), un piano de 12-EDO genera 10 acoplamientos simpáticos fuertes en dos octavas, impulsados por el tercer parcial sobre Fa4, Sol4 y Sol5. En 18-EDO todas esas vías basadas en quintas y cuartas desaparecen, reduciendo los acoplamientos fuertes a la mitad (5 coincidencias), concentradas exclusivamente en las <strong>octavas (+18 y +36 teclas)</strong> y en la <strong>décima mayor (+24 teclas)</strong>. Físicamente, el halo del pedal de sustain suena más diáfano, centrado en octavas y desprovisto de la nube armónica de quintas del piano tradicional.
+        </p>
+        <div class="formula-box">
+          f_n = n · f_0 · √(1 + B · n²) &nbsp;&nbsp;|&nbsp;&nbsp; B = (π³ · E · d⁴) / (64 · ρ · L⁴ · f_0²)
+        </div>
+        <p>
+          Dos consecuencias de diseño emergen directamente de estas curvas de rigidez mecánica:
+        </p>
+        <ul>
+          <li>
+            <strong>Estiramiento de octavas (curva de Railsback) moderado:</strong> En un media cola estándar de 165–185 cm, Do8 (4186 Hz) eleva <em>B</em> hasta ~0,01842 (+61,54 cents en el 2.º parcial). Bajo el anclaje de Do central en la tecla 40, el piano de tercios de tono culmina cerca de Sol♯6 (1661,22 Hz, <em>L</em> ≈ 12,5 cm), donde <em>B</em> ≈ 0,00373 (+12,83 cents). En el extremo grave ocurre lo mismo: empezar en Si♭1 (58,27 Hz) reduce <em>B</em> de ~0,00055 a ~0,00018. El timbre resulta más homogéneo y menos campanil en los extremos.
+          </li>
+          <li>
+            <strong>Gestión del unísono y brillo en agudos:</strong> Entre dos teclas contiguas de 18-EDO, el batimiento pasa de un pulso lento en Do2 (Δf = 2,57 Hz) a un rozamiento en Do4 (10,27 Hz) y alcanza entre Do6 y Sol6 (41,08 a 61,56 Hz) una razón Δf/CBW de 0,245 a 0,262 —justo alrededor del máximo clásico de aspereza sensorial (~0,25 del ancho de banda crítico). Por ello, mantener una anchura de unísono (<em>unison width</em>) contenida y controlar la dureza del macillo resulta indispensable para la inteligibilidad microtonal.
+          </li>
+        </ul>
+
+        <h2 id="sintesis">3. Evaluación comparativa de técnicas de síntesis</h2>
+        <h3 id="modal">1. Modelado físico: por qué destaca la vía modal e híbrida</h3>
+        <p>
+          La <strong>síntesis modal</strong> (enfoque de Balázs Bank, Stefano Zambon y Federico Fontana, IEEE TASLP 2010) descompone la cuerda en una superposición paralela de resonadores amortiguados de segundo orden. Para el piano de Carrillo permite prescribir directamente la frecuencia inarmónica exacta y la tasa de decaimiento de cada parcial en las 88 notas de 18-EDO, además de hacer emerger de forma natural la resonancia simpática del pedal. Combinada con un <strong>excitador de macillo no lineal con histéresis de Stulov</strong> (<code>F(t) = k · Δy(t)^p</code>) y una tabla armónica mediante <strong>red de retardos realimentados (FDN)</strong>, conforma la arquitectura híbrida óptima en tiempo real.
+        </p>
+        <h3 id="fm">2. Síntesis FM (Modulación de Frecuencia)</h3>
+        <p>
+          Sus espectros gobernados por funciones de Bessel no reproducen la progresión cuadrática de inarmonicidad de una cuerda de acero ni la radiación de una tabla de pícea; resulta ideal solo para un modo experimental electrónico («Sonido 13 expandido»).
+        </p>
+        <h3 id="sampling">3. Muestreo (Sampling)</h3>
+        <p>
+          Grabar el ejemplar real de San Luis Potosí sería la máxima referencia documental pero implica retos complejos de conservación y afinación; aplicar <em>pitch-shifting</em> a una librería de 12-EDO distorsiona las formantes y arrastra resonancias de quintas inexistentes.
+        </p>
+        <h3 id="neuronal">4. Síntesis neuronal y DSP diferenciable (DDSP-Piano y Piano-SSM)</h3>
+        <p>
+          Aunque prometedoras, requieren corpus masivos de audio anotado con MIDI (~65 horas) inexistentes para 18-EDO, y la propia literatura de DDSP-Piano constata que el modelado físico mantiene todavía la mayor calidad pianística global.
+        </p>
+
+        <h2 id="arquitectura">4. Arquitectura recomendada para el piano virtual</h2>
+        <ul>
+          <li><strong>Capa de entrada y mapeo microtonal:</strong> Soporte Web MIDI, importación/exportación Scala (<code>.scl/.kbm</code>), selector de los 5 anclajes tonales y visor en vivo de la notación numérica de Carrillo (<code>0–17</code> y sistema de <code>90</code>).</li>
+          <li><strong>Excitador no lineal de macillo:</strong> Fuerza de contacto dependiente de la velocidad y dureza del fieltro con enriquecimiento espectral en <em>fortissimo</em>.</li>
+          <li><strong>Motor modal paralelo de cuerdas:</strong> Banco de resonadores de 2.º orden con vector <em>B</em> ajustado a 4,83 octavas y coro de cuerdas con <em>unison width</em> controlado.</li>
+          <li><strong>Puente acoplado y tabla armónica FDN:</strong> Redistribución simpática real según el EDO activo y radiación estéreo a través de una red FDN con filtros de absorción de pícea.</li>
+        </ul>
+
+        <h2 id="hoja-de-ruta">5. Hoja de ruta práctica: tres caminos complementarios</h2>
+        <ol>
+          <li><strong>Camino 1 — Prototipo inmediato (Pianoteq Pro):</strong> Carga de los archivos <code>.scl</code> y <code>.kbm</code> exportables desde esta misma app, ajustando <em>String Length</em> (~1,60–1,85 m), <em>Unison Width</em> estrecho y <em>Note Edit</em> en agudos.</li>
+          <li><strong>Camino 2 — Sintetizador propio abierto (Web AudioWorklet / FAUST / C++20 JUCE):</strong> Prototipo web en tiempo real (esta aplicación) y posterior portabilidad a VST3/AU/CLAP con soporte ODDSound MTS-ESP y MPE.</li>
+          <li><strong>Camino 3 — Calibración musicológica de archivo:</strong> Consulta de los planos originales en el Centro Julián Carrillo de San Luis Potosí, análisis espectral de la grabación histórica de Philips (Bernard de Flavigny) y calibración cruzada mediante simuladores FDTD fuera de línea.</li>
+        </ol>
+
+        <h2 id="fuentes">6. Fuentes citadas (selección principal)</h2>
+        <ul class="refs">
+          <li>Bank, B., Zambon, S., &amp; Fontana, F. (2010). <em>A Modal-Based Real-Time Piano Synthesizer</em>. IEEE TASLP. <a href="https://www.semanticscholar.org/paper/A-Modal-Based-Real-Time-Piano-Synthesizer-Bank-Zambon/a9d709fdcaa292d59fbfe1ee75404684321d6cd7" target="_blank" rel="noopener noreferrer">Semantic Scholar</a></li>
+          <li>Bank, B. <em>Physics-Based Sound Synthesis of the Piano</em>. BME-MIT. <a href="https://home.mit.bme.hu/~bank/thesis/pianomod.pdf" target="_blank" rel="noopener noreferrer">pianomod.pdf</a></li>
+          <li>Cannon-Brown, W. (2024). <em>Julián Carrillo, Laws of Musical Metamorphosis, and the Metamorphoser Pianos</em>. Music Theory Online (MTO 30.4). <a href="https://mtosmt.org/issues/mto.24.30.4/mto.24.30.4.cannon-brown.html" target="_blank" rel="noopener noreferrer">mtosmt.org</a></li>
+          <li>Galván, A. (2018). <em>Aproximación a la obra microinterválica de Julián Carrillo</em>. UASLP. <a href="https://repositorioinstitucional.uaslp.mx/xmlui/bitstream/handle/i/5990/TesisM.FH.2018.Galvan.Aproximaci%C3%B3n.pdf?sequence=1&isAllowed=y" target="_blank" rel="noopener noreferrer">Repositorio UASLP</a></li>
+          <li>Renault, L., Mignot, R., &amp; Roebel, A. <em>DDSP-Piano: A Neural Sound Synthesizer Informed by Instrument Knowledge</em>. <a href="https://github.com/lrenault/ddsp-piano" target="_blank" rel="noopener noreferrer">GitHub</a></li>
+          <li>Dallinger, D. et al. (2025). <em>Piano-SSM: Diagonal State Space Models for Efficient MIDI-to-Raw Audio Synthesis</em>. DAFx25. <a href="https://jantsch.se/AxelJantsch/papers/2025/DominikDallinger-DAFx25.pdf" target="_blank" rel="noopener noreferrer">DAFx25 PDF</a></li>
+          <li>Chabassier, J. <em>Physical Modeling of the Piano</em>. INRIA / CNRS. <a href="http://juliettechabassier.perso.math.cnrs.fr/public/focus/2023/piano/" target="_blank" rel="noopener noreferrer">juliettechabassier</a></li>
+          <li>GRAME-CNCM. <em>FAUST Physical Modeling Library (physmodels.lib) &amp; mesh2faust</em>. <a href="https://faustlibraries.grame.fr/libs/physmodels/" target="_blank" rel="noopener noreferrer">faustlibraries.grame.fr</a></li>
+        </ul>
+        <hr style="border:none;border-top:1px solid rgba(122,75,42,0.25);margin:28px 0 14px;" />
+        <p style="font-size:0.84rem;color:var(--ink-soft);display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;">
+          <span>Recreación virtual e investigación aplicada por <a href="https://www.instagram.com/laurorobles/" target="_blank" rel="noopener noreferrer" style="color:var(--accent);font-weight:600;">@laurorobles</a></span>
+          <a href="https://extasisrecords.bandcamp.com" target="_blank" rel="noopener noreferrer" style="color:var(--accent);font-weight:600;">@extasisrecords</a>
+        </p>
+      </article>
+    </div>
+  </body>
+</html>

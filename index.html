@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sonido 13 · Piano Metamorfoseador de Tercios de Tono (Julián Carrillo)</title>
+    <meta
+      name="description"
+      content="Sonido 13: reconstrucción virtual interactiva por modelado físico híbrido del piano metamorfoseador de tercios de tono (18-EDO) de Julián Carrillo (Carl Sauter, 1958). Con Pianola animada, 5 variantes históricas, Web MIDI y documentación acústica. Creado por @laurorobles."
+    />
+    <meta
+      name="keywords"
+      content="Julián Carrillo, Sonido 13, piano metamorfoseador, tercios de tono, 18-EDO, 24-EDO, 96-EDO, microtonal, Carl Sauter 1958, modelado físico, síntesis modal, Web Audio API, AudioWorklet, Web MIDI, música mexicana, Lauro Robles, laurorobles, extasisrecords"
+    />
+    <meta name="author" content="Lauro Robles (@laurorobles)" />
+    <meta name="robots" content="index, follow" />
+    <link rel="canonical" href="https://laurorobles.github.io/sonido13-piano/" />
+
+    <!-- Open Graph / Facebook / WhatsApp / Discord -->
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Sonido 13 · Piano Metamorfoseador Virtual" />
+    <meta property="og:locale" content="es_MX" />
+    <meta property="og:locale:alternate" content="en_US" />
+    <meta property="og:url" content="https://laurorobles.github.io/sonido13-piano/" />
+    <meta property="og:title" content="Sonido 13 · Piano Metamorfoseador de Julián Carrillo (Recreación Virtual)" />
+    <meta
+      property="og:description"
+      content="Toca y explora en tu navegador el piano de tercios de tono (18-EDO) de Julián Carrillo fabricado por Carl Sauter en 1958. Modelado físico híbrido, Pianola animada de 10 obras, comparador A/B 18↔12-EDO y anexo documental."
+    />
+    <meta property="og:image" content="https://laurorobles.github.io/sonido13-piano/og-preview.png" />
+    <meta
+      property="og:image:alt"
+      content="Interfaz del Piano Metamorfoseador Virtual Sonido 13 mostrando el arpa Carl Sauter de 1958, rollo de pianola animado, inspector de metamorfosis y teclado de 88 teclas"
+    />
+
+    <!-- Twitter / X -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Sonido 13 · Piano Metamorfoseador de Julián Carrillo (Recreación Virtual)" />
+    <meta
+      name="twitter:description"
+      content="Reconstrucción web por modelado físico híbrido del piano de tercios de tono (18-EDO, Carl Sauter 1958) de Julián Carrillo, por @laurorobles."
+    />
+    <meta name="twitter:image" content="https://laurorobles.github.io/sonido13-piano/og-preview.png" />
+
+    <!-- Schema.org JSON-LD -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "Sonido 13 · Piano Metamorfoseador Virtual",
+        "alternateName": [
+          "Julián Carrillo Third-Tone Piano",
+          "Piano Metamorfoseador de Tercios de Tono Carl Sauter 1958"
+        ],
+        "url": "https://laurorobles.github.io/sonido13-piano/",
+        "image": "https://laurorobles.github.io/sonido13-piano/og-preview.png",
+        "applicationCategory": "MultimediaApplication",
+        "operatingSystem": "Any (Web Browser)",
+        "inLanguage": ["es", "en"],
+        "isAccessibleForFree": true,
+        "license": "https://opensource.org/licenses/MIT",
+        "description": "Reconstrucción web interactiva por modelado físico híbrido del piano metamorfoseador de tercios de tono (18-EDO) concebido por Julián Carrillo y fabricado por Carl Sauter en 1958.",
+        "author": {
+          "@type": "Person",
+          "name": "Lauro Robles",
+          "sameAs": [
+            "https://www.instagram.com/laurorobles/",
+            "https://github.com/laurorobles",
+            "https://extasisrecords.bandcamp.com"
+          ]
+        },
+        "about": {
+          "@type": "Thing",
+          "name": "Piano Metamorfoseador de Tercios de Tono (Julián Carrillo / Carl Sauter, 1958)",
+          "description": "Piano acústico microtonal de media cola de 88 teclas afinado en 18 divisiones iguales por octava (Sonido 13)."
+        }
+      }
+    </script>
+
+    <link
+      rel="icon"
+      href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect x='8' y='14' width='84' height='72' rx='10' fill='%23161310' stroke='%23d4af6a' stroke-width='5'/><rect x='16' y='52' width='68' height='26' rx='3' fill='%23f4efe4'/><rect x='26' y='52' width='7' height='16' fill='%23161310'/><rect x='40' y='52' width='7' height='16' fill='%23161310'/><rect x='60' y='52' width='7' height='16' fill='%23161310'/><text x='50' y='40' text-anchor='middle' font-family='Georgia,serif' font-size='22' font-weight='bold' fill='%23f2d28b'>13</text></svg>"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div id="app"></div>
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>

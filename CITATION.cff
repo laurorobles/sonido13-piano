@@ -1,0 +1,54 @@
+cff-version: 1.2.0
+title: "Sonido 13 · Piano Metamorfoseador Virtual: Reconstrucción por modelado físico híbrido del piano de tercios de tono de Julián Carrillo"
+message: "Si utilizas este instrumento virtual o su documentación en investigación académica, docencia o creación artística, por favor cítalo como se indica abajo."
+type: software
+authors:
+  - given-names: Lauro
+    family-names: Robles
+    alias: "@laurorobles"
+    website: "https://www.instagram.com/laurorobles/"
+version: "1.0.0"
+date-released: "2026-11-26"
+license: MIT
+url: "https://laurorobles.github.io/sonido13-piano/"
+repository-code: "https://github.com/laurorobles/sonido13-piano"
+keywords:
+  - Julián Carrillo
+  - Sonido 13
+  - piano metamorfoseador
+  - 18-EDO
+  - tercios de tono
+  - microtonal piano
+  - Carl Sauter 1958
+  - physical modeling
+  - modal synthesis
+  - Web Audio API
+  - AudioWorklet
+references:
+  - type: book
+    authors:
+      - given-names: Julián
+        family-names: Carrillo
+    title: "Leyes de metamorfosis musicales"
+    year: 1949
+    city: "Ciudad de México"
+  - type: article
+    authors:
+      - given-names: Wes
+        family-names: Cannon-Brown
+    title: "Julián Carrillo, Laws of Musical Metamorphosis, and the Metamorphoser Pianos"
+    journal: "Music Theory Online"
+    volume: 30
+    issue: 4
+    year: 2024
+  - type: article
+    authors:
+      - given-names: Balázs
+        family-names: Bank
+      - given-names: Stefano
+        family-names: Zambon
+      - given-names: Federico
+        family-names: Fontana
+    title: "A Modal-Based Real-Time Piano Synthesizer"
+    journal: "IEEE Transactions on Audio, Speech, and Language Processing"
+    year: 2010
