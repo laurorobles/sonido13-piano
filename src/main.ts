@@ -830,6 +830,37 @@ function renderApp(): void {
             </select>
           </div>
         </div>
+
+        <!-- Piece Musicological Dossier right beneath the piece selector & transport! -->
+        <div class="piece-dossier-inline">
+          <div class="dossier-header">
+            <div class="dossier-title-wrap">
+              <h3 title="${lang === 'es' ? piece.titleEs : piece.titleEn}">${lang === 'es' ? piece.titleEs : piece.titleEn}</h3>
+              <p title="${lang === 'es' ? piece.descEs : piece.descEn}">${lang === 'es' ? piece.descEs : piece.descEn}</p>
+            </div>
+            <div class="dossier-badges">
+              <span class="d-badge">${piece.badges.system}</span>
+              <span class="d-badge">${piece.badges.yearRef}</span>
+              <span class="d-badge">${lang === 'es' ? piece.badges.keyIntervalsEs : piece.badges.keyIntervalsEn}</span>
+              <span class="d-badge">${piece.badges.carrilloFormula}</span>
+            </div>
+          </div>
+
+          <div class="dossier-columns">
+            <div class="dossier-col">
+              <h4>${lang === 'es' ? '1. Contexto Histórico y Repertorio' : '1. Historical & Repertoire Context'}</h4>
+              <p>${lang === 'es' ? piece.historicalContextEs : piece.historicalContextEn}</p>
+            </div>
+            <div class="dossier-col">
+              <h4>${lang === 'es' ? '2. Análisis Interválico y Acústico' : '2. Intervallic & Acoustic Analysis'}</h4>
+              <p>${lang === 'es' ? piece.acousticAnalysisEs : piece.acousticAnalysisEn}</p>
+            </div>
+            <div class="dossier-col">
+              <h4>${lang === 'es' ? '3. Experimento de Escucha Activa' : '3. Active Listening Experiment'}</h4>
+              <p>${lang === 'es' ? piece.listeningExperimentEs : piece.listeningExperimentEn}</p>
+            </div>
+          </div>
+        </div>
       </section>
 
       <!-- 2. Physical Piano Cabinet (Carl Sauter 1958) — Zero-Shift Fixed Geometry -->
@@ -965,38 +996,7 @@ function renderApp(): void {
         </div>
       </section>
 
-      <!-- 4. Extended Musicological & Acoustic Dossier of the Active Piece -->
-      <article class="piece-dossier-card">
-        <div class="dossier-header">
-          <div class="dossier-title-wrap">
-            <h3>${lang === 'es' ? piece.titleEs : piece.titleEn}</h3>
-            <p>${lang === 'es' ? piece.descEs : piece.descEn}</p>
-          </div>
-          <div class="dossier-badges">
-            <span class="d-badge">${piece.badges.system}</span>
-            <span class="d-badge">${piece.badges.yearRef}</span>
-            <span class="d-badge">${lang === 'es' ? piece.badges.keyIntervalsEs : piece.badges.keyIntervalsEn}</span>
-            <span class="d-badge">${piece.badges.carrilloFormula}</span>
-          </div>
-        </div>
-
-        <div class="dossier-columns">
-          <div class="dossier-col">
-            <h4>${lang === 'es' ? '1. Contexto Histórico y Repertorio' : '1. Historical & Repertoire Context'}</h4>
-            <p>${lang === 'es' ? piece.historicalContextEs : piece.historicalContextEn}</p>
-          </div>
-          <div class="dossier-col">
-            <h4>${lang === 'es' ? '2. Análisis Interválico y Acústico' : '2. Intervallic & Acoustic Analysis'}</h4>
-            <p>${lang === 'es' ? piece.acousticAnalysisEs : piece.acousticAnalysisEn}</p>
-          </div>
-          <div class="dossier-col">
-            <h4>${lang === 'es' ? '3. Experimento de Escucha Activa' : '3. Active Listening Experiment'}</h4>
-            <p>${lang === 'es' ? piece.listeningExperimentEs : piece.listeningExperimentEn}</p>
-          </div>
-        </div>
-      </article>
-
-      <!-- 5. Acoustic Calibration Strip -->
+      <!-- 4. Acoustic Calibration Strip -->
       <section class="panel-card">
         <div class="panel-label">
           <span>${txt.acousticTitle}</span>

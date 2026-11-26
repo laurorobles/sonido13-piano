@@ -884,55 +884,72 @@ body {
   line-height: 1.45;
 }
 
-/* ── Extended Piece Musicological Dossier Card ── */
-.piece-dossier-card {
-  background: linear-gradient(180deg, #1b1814 0%, #151310 100%);
-  border: 1px solid var(--border-subtle);
-  border-radius: 12px;
-  padding: 14px 16px;
+/* ── Integrated Piece Musicological Dossier (Inside Repertoire Card, Locked Height) ── */
+.piece-dossier-inline {
+  border-top: 1px solid rgba(212, 175, 106, 0.15);
+  padding-top: 9px;
   display: flex;
   flex-direction: column;
-  gap: 10px;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.28);
+  gap: 8px;
 }
 
 .dossier-header {
-  display: flex;
-  align-items: baseline;
-  justify-content: space-between;
-  gap: 12px;
-  flex-wrap: wrap;
-  padding-bottom: 8px;
-  border-bottom: 1px solid rgba(212, 175, 106, 0.15);
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 10px;
+  min-height: 42px;
+}
+
+@media (max-width: 880px) {
+  .dossier-header {
+    grid-template-columns: 1fr;
+  }
+}
+
+.dossier-title-wrap {
+  min-width: 0;
 }
 
 .dossier-title-wrap h3 {
   font-family: var(--serif);
-  font-size: 1.25rem;
+  font-size: 1.15rem;
   color: var(--gold-bright);
   font-weight: 600;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .dossier-title-wrap p {
-  font-size: 0.79rem;
+  font-size: 0.76rem;
   color: var(--text-soft);
-  margin-top: 2px;
+  margin-top: 1px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .dossier-badges {
   display: flex;
   align-items: center;
-  gap: 6px;
-  flex-wrap: wrap;
+  gap: 5px;
+  flex-wrap: nowrap;
+}
+
+@media (max-width: 880px) {
+  .dossier-badges {
+    flex-wrap: wrap;
+  }
 }
 
 .d-badge {
   background: var(--bg-inset);
   border: 1px solid rgba(212, 175, 106, 0.24);
   border-radius: 5px;
-  padding: 3px 8px;
+  padding: 3px 7px;
   font-family: var(--mono);
-  font-size: 0.67rem;
+  font-size: 0.65rem;
   color: var(--gold-bright);
   white-space: nowrap;
 }
@@ -940,7 +957,7 @@ body {
 .dossier-columns {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 12px;
+  gap: 9px;
 }
 
 @media (max-width: 880px) {
@@ -953,23 +970,32 @@ body {
   background: var(--bg-inset);
   border: 1px solid rgba(212, 175, 106, 0.13);
   border-radius: 8px;
-  padding: 10px 12px;
+  padding: 9px 11px;
   display: flex;
   flex-direction: column;
-  gap: 5px;
+  gap: 4px;
+  height: 132px;
+  overflow-y: auto;
+}
+
+@media (max-width: 880px) {
+  .dossier-col {
+    height: auto;
+  }
 }
 
 .dossier-col h4 {
-  font-size: 0.67rem;
+  font-size: 0.64rem;
   text-transform: uppercase;
   letter-spacing: 0.08em;
   color: var(--gold);
   font-weight: 600;
+  flex-shrink: 0;
 }
 
 .dossier-col p {
-  font-size: 0.78rem;
-  line-height: 1.56;
+  font-size: 0.74rem;
+  line-height: 1.5;
   color: var(--text-soft);
 }
 
