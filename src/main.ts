@@ -213,7 +213,7 @@ function updateKeyVisual(keyIndex: number, isActive: boolean): void {
 // Updates ONLY textContent inside the pre-built 6-column HUD — ZERO DOM reflow / size change!
 function updateNotationHud(): void {
   const v = VARIANTS[currentVariant];
-  setText('hud-k-step', `${t().stepLabel} (0–${v.edo - 1})`);
+  setText('hud-k-step', `Carrillo (0–${v.edo - 1})`);
   setText('hud-k-90', v.edo === 18 ? t().scale90Label : lang === 'es' ? 'Paso EDO' : 'EDO Step');
 
   if (!lastPlayedKey) {
