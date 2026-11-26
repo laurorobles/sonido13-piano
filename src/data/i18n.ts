@@ -190,6 +190,22 @@ export const RESEARCH_HTML = {
     <p class="lead">
       Esta aplicación es una reconstrucción por <strong>modelado físico híbrido</strong> (banco modal de cuerdas, excitador no lineal de macillo, resonancia simpática acoplada y tabla armónica FDN) del <strong>piano metamorfoseador de tercios de tono (18-EDO)</strong> concebido por <strong>Julián Carrillo (1875–1965)</strong> y construido por la casa alemana <strong>Carl Sauter</strong> en 1958.
     </p>
+    <div class="info-photo-grid">
+      <figure class="info-figure">
+        <img src="./images/julian-carrillo.jpg" alt="Retrato histórico autografiado de Julián Carrillo en París (1899)" />
+        <figcaption>
+          <strong>Julián Carrillo Trujillo (1875–1965)</strong><br />
+          Retrato autografiado en París (4 de septiembre de 1899), cuatro años después de sus primeros experimentos sobre la división del tono en la Ciudad de México (1895). <em>Fuente: Wikimedia Commons.</em>
+        </figcaption>
+      </figure>
+      <figure class="info-figure">
+        <img src="./images/sauter-metamorfoseador.jpg" alt="Piano Metamorfoseador Carl Sauter conservado en el Centro Julián Carrillo de San Luis Potosí" style="object-position:center 48%" />
+        <figcaption>
+          <strong>Piano Metamorfoseador Carl Sauter (1958)</strong><br />
+          Ejemplar original de la colección de 15 pianos fabricados en Spaichingen (Alemania) y resguardados en el <strong>Centro Julián Carrillo</strong> (San Luis Potosí), mostrando el emblema dorado <em>Sauter</em> y el medallón en relieve del compositor. <em>Documentación: W. Cannon-Brown (MTO 30.4, 2024).</em>
+        </figcaption>
+      </figure>
+    </div>
     <div class="callout">
       <strong>Transparencia organológica:</strong> Las fuentes académicas confirman que el modelo de 1958 de Carl Sauter era un piano de media cola (<em>baby grand</em>) de 88 teclas afinado en 18-EDO, conservado en el <strong>Centro Julián Carrillo de San Luis Potosí</strong>. Sin embargo, los planos originales del encordado y las frecuencias límite exactas de esa unidad permanecen inéditos. Por ello, este instrumento ofrece <strong>5 anclajes tonales seleccionables</strong> que recalibran automáticamente las frecuencias y la curva de inarmonicidad <em>B</em>.
     </div>
@@ -222,6 +238,22 @@ export const RESEARCH_HTML = {
     <p class="lead">
       This application is a <strong>hybrid physical modeling</strong> reconstruction (modal string bank, nonlinear hammer exciter, coupled sympathetic resonance, and FDN spruce soundboard) of the <strong>third-tone metamorphoser piano (18-EDO)</strong> conceived by <strong>Julián Carrillo (1875–1965)</strong> and built by <strong>Carl Sauter</strong> in 1958.
     </p>
+    <div class="info-photo-grid">
+      <figure class="info-figure">
+        <img src="./images/julian-carrillo.jpg" alt="Autographed historical portrait of Julián Carrillo in Paris (1899)" />
+        <figcaption>
+          <strong>Julián Carrillo Trujillo (1875–1965)</strong><br />
+          Autographed portrait in Paris (September 4, 1899), four years after his initial microtonal string experiments in Mexico City (1895). <em>Source: Wikimedia Commons.</em>
+        </figcaption>
+      </figure>
+      <figure class="info-figure">
+        <img src="./images/sauter-metamorfoseador.jpg" alt="Carl Sauter Metamorphoser Piano at the Centro Julián Carrillo in San Luis Potosí" style="object-position:center 48%" />
+        <figcaption>
+          <strong>Carl Sauter Metamorphoser Piano (1958)</strong><br />
+          Original instrument from the 15-piano series built in Spaichingen (Germany) and preserved at the <strong>Centro Julián Carrillo</strong> (San Luis Potosí), featuring the brass <em>Sauter</em> script emblem and Carrillo’s relief medallion. <em>Doc.: W. Cannon-Brown (MTO 30.4, 2024).</em>
+        </figcaption>
+      </figure>
+    </div>
     <div class="callout">
       <strong>Organological transparency:</strong> Academic sources confirm that the 1958 Carl Sauter unit was an 88-key <em>baby grand</em> tuned in 18-EDO, preserved today at the <strong>Centro Julián Carrillo in San Luis Potosí</strong>. Because the original stringing plans and exact boundary pitches remain unpublished, this instrument provides <strong>5 selectable tonal anchors</strong> that dynamically recalibrate frequencies and the inharmonicity curve <em>B</em>.
     </div>
