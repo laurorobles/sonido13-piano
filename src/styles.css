@@ -283,14 +283,12 @@ body {
   color: var(--text-muted);
   border: 1px solid rgba(212, 175, 106, 0.16);
   border-radius: 5px;
-  padding: 5px 8px;
-  font-size: 0.73rem;
+  padding: 6px 8px;
+  font-size: 0.72rem;
+  line-height: 1.25;
   font-weight: 500;
   cursor: pointer;
   text-align: left;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
   transition: background 0.14s ease, color 0.14s ease, border-color 0.14s ease;
 }
 
@@ -307,22 +305,18 @@ body {
 }
 
 .transport-bar {
-  display: grid;
-  grid-template-columns: auto 1fr auto;
-  gap: 10px;
+  display: flex;
   align-items: center;
-}
-
-@media (max-width: 860px) {
-  .transport-bar {
-    grid-template-columns: 1fr;
-  }
+  justify-content: space-between;
+  gap: 10px;
+  flex-wrap: wrap;
 }
 
 .rep-transport {
   display: flex;
   align-items: center;
   gap: 6px;
+  flex-wrap: wrap;
 }
 
 .rep-transport .btn {
@@ -338,21 +332,19 @@ body {
   width: 218px;
 }
 
-/* Fixed-Height Single-Line Live Ticker (0px vertical shift guaranteed!) */
+/* Full-Width Live Ticker Banner — Reads 100% in full with zero '...' truncation and locked min-height! */
 .live-ticker {
-  height: 30px;
-  line-height: 28px;
+  width: 100%;
+  min-height: 34px;
   background: var(--bg-inset);
   border: 1px solid rgba(212, 175, 106, 0.18);
   border-radius: 6px;
-  padding: 0 10px;
-  display: block;
-  font-size: 0.74rem;
+  padding: 6px 12px;
+  display: flex;
+  align-items: center;
+  font-size: 0.77rem;
+  line-height: 1.4;
   color: #9be7c4;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  min-width: 0;
 }
 
 .live-ticker.callout-active {
@@ -366,14 +358,14 @@ body {
   display: flex;
   align-items: center;
   gap: 8px;
-  font-size: 0.71rem;
+  font-size: 0.72rem;
   color: var(--text-muted);
   font-family: var(--mono);
   font-variant-numeric: tabular-nums;
 }
 
 .progress-track {
-  width: 110px;
+  width: 150px;
   height: 5px;
   background: #090807;
   border-radius: 99px;
@@ -486,24 +478,20 @@ body {
 }
 
 .hud-metric .k {
-  font-size: 0.55rem;
+  font-size: 0.54rem;
   text-transform: uppercase;
-  letter-spacing: 0.05em;
+  letter-spacing: 0.03em;
   color: var(--text-muted);
   white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
 }
 
 .hud-metric .v {
   font-family: var(--mono);
-  font-size: 0.78rem;
+  font-size: 0.76rem;
   color: var(--gold-bright);
   font-weight: 500;
   font-variant-numeric: tabular-nums;
   white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
 }
 
 .desk-tools {
@@ -792,14 +780,14 @@ body {
 /* Fixed-Height 3-Column Metamorphosis Inspector */
 .metamorph-box {
   display: grid;
-  grid-template-columns: 0.9fr 1.1fr 1.3fr;
+  grid-template-columns: 0.85fr 1.05fr 1.4fr;
   align-items: center;
   gap: 10px;
   background: var(--bg-inset);
   border: 1px solid rgba(212, 175, 106, 0.16);
   border-radius: 8px;
   padding: 8px 12px;
-  height: 52px;
+  min-height: 52px;
 }
 
 @media (max-width: 640px) {
@@ -819,22 +807,16 @@ body {
 .meta-col .mk {
   font-size: 0.6rem;
   text-transform: uppercase;
-  letter-spacing: 0.06em;
+  letter-spacing: 0.05em;
   color: var(--text-muted);
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
 }
 
 .meta-col .mv {
   font-family: var(--mono);
-  font-size: 0.8rem;
+  font-size: 0.78rem;
   color: var(--text-main);
   font-weight: 600;
   font-variant-numeric: tabular-nums;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
 }
 
 .meta-col .mv.highlight {
@@ -884,13 +866,13 @@ body {
   line-height: 1.45;
 }
 
-/* ── Integrated Piece Musicological Dossier (Inside Repertoire Card, Locked Height) ── */
+/* ── Integrated Piece Musicological Dossier (Full Unclipped Text, Clean Layout) ── */
 .piece-dossier-inline {
   border-top: 1px solid rgba(212, 175, 106, 0.15);
-  padding-top: 9px;
+  padding-top: 10px;
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 9px;
 }
 
 .piece-dossier-inline.collapsed {
@@ -898,62 +880,47 @@ body {
 }
 
 .dossier-header {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) auto;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.dossier-top-line {
+  display: flex;
   align-items: center;
+  justify-content: space-between;
   gap: 10px;
-  min-height: 42px;
-}
-
-@media (max-width: 880px) {
-  .dossier-header {
-    grid-template-columns: 1fr;
-  }
-}
-
-.dossier-title-wrap {
-  min-width: 0;
+  flex-wrap: wrap;
 }
 
 .dossier-title-wrap h3 {
   font-family: var(--serif);
-  font-size: 1.15rem;
+  font-size: 1.22rem;
   color: var(--gold-bright);
   font-weight: 600;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  line-height: 1.2;
 }
 
-.dossier-title-wrap p {
-  font-size: 0.76rem;
+.dossier-desc {
+  font-size: 0.8rem;
   color: var(--text-soft);
-  margin-top: 1px;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  line-height: 1.48;
 }
 
 .dossier-badges {
   display: flex;
   align-items: center;
-  gap: 5px;
-  flex-wrap: nowrap;
-}
-
-@media (max-width: 880px) {
-  .dossier-badges {
-    flex-wrap: wrap;
-  }
+  gap: 6px;
+  flex-wrap: wrap;
 }
 
 .d-badge {
   background: var(--bg-inset);
   border: 1px solid rgba(212, 175, 106, 0.24);
   border-radius: 5px;
-  padding: 3px 7px;
+  padding: 3px 8px;
   font-family: var(--mono);
-  font-size: 0.65rem;
+  font-size: 0.66rem;
   color: var(--gold-bright);
   white-space: nowrap;
 }
@@ -961,7 +928,8 @@ body {
 .dossier-columns {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 9px;
+  gap: 10px;
+  align-items: stretch;
 }
 
 @media (max-width: 880px) {
@@ -974,32 +942,23 @@ body {
   background: var(--bg-inset);
   border: 1px solid rgba(212, 175, 106, 0.13);
   border-radius: 8px;
-  padding: 9px 11px;
+  padding: 10px 12px;
   display: flex;
   flex-direction: column;
-  gap: 4px;
-  height: 132px;
-  overflow-y: auto;
-}
-
-@media (max-width: 880px) {
-  .dossier-col {
-    height: auto;
-  }
+  gap: 5px;
 }
 
 .dossier-col h4 {
-  font-size: 0.64rem;
+  font-size: 0.66rem;
   text-transform: uppercase;
   letter-spacing: 0.08em;
   color: var(--gold);
   font-weight: 600;
-  flex-shrink: 0;
 }
 
 .dossier-col p {
-  font-size: 0.74rem;
-  line-height: 1.5;
+  font-size: 0.77rem;
+  line-height: 1.54;
   color: var(--text-soft);
 }
 

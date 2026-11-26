@@ -826,10 +826,6 @@ function renderApp(): void {
             </button>
           </div>
 
-          <div class="live-ticker" id="live-ticker">
-            🎧 ${lang === 'es' ? piece.listenForEs : piece.listenForEn}
-          </div>
-
           <div class="pianola-progress-wrap">
             <div class="progress-track"><div class="progress-fill" id="pianola-progress-fill"></div></div>
             <span id="pianola-time">0.0s / ${piece.durationSec.toFixed(1)}s</span>
@@ -841,19 +837,25 @@ function renderApp(): void {
           </div>
         </div>
 
+        <div class="live-ticker" id="live-ticker">
+          🎧 ${lang === 'es' ? piece.listenForEs : piece.listenForEn}
+        </div>
+
         <!-- Piece Musicological Dossier right beneath the piece selector & transport! -->
         <div class="piece-dossier-inline ${showPieceDossier ? '' : 'collapsed'}" id="piece-dossier-panel">
           <div class="dossier-header">
-            <div class="dossier-title-wrap">
-              <h3 title="${lang === 'es' ? piece.titleEs : piece.titleEn}">${lang === 'es' ? piece.titleEs : piece.titleEn}</h3>
-              <p title="${lang === 'es' ? piece.descEs : piece.descEn}">${lang === 'es' ? piece.descEs : piece.descEn}</p>
+            <div class="dossier-top-line">
+              <div class="dossier-title-wrap">
+                <h3>${lang === 'es' ? piece.titleEs : piece.titleEn}</h3>
+              </div>
+              <div class="dossier-badges">
+                <span class="d-badge">${piece.badges.system}</span>
+                <span class="d-badge">${piece.badges.yearRef}</span>
+                <span class="d-badge">${lang === 'es' ? piece.badges.keyIntervalsEs : piece.badges.keyIntervalsEn}</span>
+                <span class="d-badge">${piece.badges.carrilloFormula}</span>
+              </div>
             </div>
-            <div class="dossier-badges">
-              <span class="d-badge">${piece.badges.system}</span>
-              <span class="d-badge">${piece.badges.yearRef}</span>
-              <span class="d-badge">${lang === 'es' ? piece.badges.keyIntervalsEs : piece.badges.keyIntervalsEn}</span>
-              <span class="d-badge">${piece.badges.carrilloFormula}</span>
-            </div>
+            <p class="dossier-desc">${lang === 'es' ? piece.descEs : piece.descEn}</p>
           </div>
 
           <div class="dossier-columns">
